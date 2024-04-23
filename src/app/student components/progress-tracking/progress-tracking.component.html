@@ -1,0 +1,11 @@
+<!-- Angular component template for displaying progress -->
+<div class="progress-container" *ngIf="progress; else loading">
+  <h2>Your Progress</h2>
+  <p>You have completed {{ progress.completedCourses }} of {{ progress.totalCourses }} courses.</p>
+</div>
+<ng-template #loading>
+  <div class="progress-container progress-loading">
+      <h2>Your Progress</h2>
+      <p>Loading your course progress...</p>
+  </div>
+</ng-template>

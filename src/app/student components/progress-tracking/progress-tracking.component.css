@@ -1,0 +1,46 @@
+/* Styles for the progress display */
+.progress-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.progress-container h2 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.progress-container p {
+    font-size: 1.2rem;
+    text-align: center;
+    color: #555;
+    margin: 0;
+    padding: 0;
+    transition: color 0.3s ease;
+}
+
+/* Animation on hover to lift the container */
+.progress-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+/* Keyframes for loading animation */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* Apply the animation to the paragraph when data is loading */
+.progress-loading p {
+    animation: pulse 1s infinite ease-in-out;
+}

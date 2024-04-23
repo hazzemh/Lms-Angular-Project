@@ -1,0 +1,45 @@
+<!-- register.component.html -->
+<div class="register-form">
+  <h2>Register</h2>
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="email">Email Address:</label>
+      <input type="email" formControlName="email" id="email" class="form-control" />
+      <div *ngIf="registerForm.get('email')?.touched">
+        <small class="error" *ngIf="registerForm.get('email')?.errors?.['required']">
+          Email is required.
+        </small>
+        <small class="error" *ngIf="registerForm.get('email')?.errors?.['email']">
+          Please enter a valid email address.
+        </small>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password" formControlName="password" id="password" class="form-control" />
+      <div *ngIf="registerForm.get('password')?.touched">
+        <small class="error" *ngIf="registerForm.get('password')?.errors?.['required']">
+          Password is required.
+        </small>
+        <small class="error" *ngIf="registerForm.get('password')?.errors?.['minlength']">
+          Password must be at least 6 characters long.
+        </small>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="role">Role:</label>
+      <select formControlName="role" id="role" class="form-control">
+        <option value="student">Student</option>
+        <option value="instructor">Instructor</option>
+        <option value="admin">Admin</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="registerForm.invalid || isLoading">
+      Register
+    </button>
+    <div *ngIf="isLoading" class="loading">
+      Loading...
+    </div>
+  </form>
+</div>

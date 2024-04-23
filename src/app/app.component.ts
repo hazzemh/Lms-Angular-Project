@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from './authentication service/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'Lms-Angular-Project';
+  constructor(public authService: AuthService) { }
+
+  get isLoggedIn() {
+    return this.authService.isLoggedIn;
+  }
 }

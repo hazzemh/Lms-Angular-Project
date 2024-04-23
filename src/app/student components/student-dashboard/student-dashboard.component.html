@@ -1,0 +1,22 @@
+<!-- student-dashboard.component.html -->
+<div class="dashboard">
+    <h1>Welcome, {{ student.name }}!</h1>
+    <div class="courses-overview">
+        <h2>Your Courses</h2>
+        <div *ngFor="let course of courses">
+            <app-course-card [course]="course"></app-course-card>
+        </div>
+    </div>
+    <div class="assignments">
+        <h2>Upcoming Assignments</h2>
+        <ul>
+            <li *ngFor="let assignment of assignments">
+                {{ assignment.name }} - Due: {{ assignment.dueDate | date }}
+            </li>
+        </ul>
+    </div>
+    <div class="announcements">
+        <h2>Recent Announcements</h2>
+        <p *ngFor="let announcement of announcements">{{ announcement.content }}</p>
+    </div>
+</div>
