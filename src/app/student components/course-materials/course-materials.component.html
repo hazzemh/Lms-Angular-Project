@@ -5,6 +5,12 @@
     <li *ngFor="let course of courses">
       <h3>{{ course.title }}</h3>
       <p>{{ course.description }}</p>
+      <!-- Buttons -->
+      <div class="button-container">
+        <button>Lectures</button>
+        <button>Readings</button>
+        <button>Multimedia</button>
+      </div>
       <small>Instructor: {{ course.instructor }}</small>
     </li>
   </ul>

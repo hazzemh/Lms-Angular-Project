@@ -1,57 +1,126 @@
-/* course-materials.component.css */
 ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  li {
-    margin-bottom: 20px;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 10px;
-    background: #fff;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  li:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  }
-  
-  h3 {
-    color: #333;
-    font-size: 1.2em;
-    margin: 0.5em 0;
-  }
-  
-  p {
-    color: #666;
-    font-size: 1em;
-    line-height: 1.5;
-  }
-  
-  small {
-    display: block;
-    margin-top: 10px;
-    font-size: 0.8rem;
-    color: #999;
-  }
-  
-  /* Adding animations and interactivity */
-  a {
-    color: #0066cc;
-    text-decoration: none;
-    transition: color 0.3s ease;
-  }
-  
-  a:hover {
-    color: #ff6600;
-  }
-  
-  /* Loading text styling */
-  .loading-text {
-    font-style: italic;
-    color: #888;
-  }
-  
+  list-style-type: none;
+  padding: 0;
+  margin: 80px auto; /* Centers the list */
+  width: 90%; /* Adjusts the width of the ul */
+  max-width: 1200px; /* Ensures the ul does not get too wide */
+  display: flex; /* Enables flexbox layout */
+  flex-wrap: wrap; /* Allows items to wrap onto the next line */
+  justify-content: space-around; /* Distributes space around items */
+}
+
+li {
+  display: flex; /* Keeps the contents of li using flex */
+  flex-direction: column; /* Stacks content vertically */
+  justify-content: flex-start; /* Distributes spacing inside the li */
+  align-items: flex-start; /* Aligns items to the start of the flex container */
+  padding: 20px; /* Keeps consistent padding around content */
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eee;
+  background: #eee;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 300px;
+  width: 200px;
+  box-sizing: border-box; /* Includes padding and border in the width and height */
+}
+h2 {
+  color: #333;
+  padding: 10px 40px;
+  border-radius: 5px;
+  position: relative;
+  font-size: 20px;
+}
+h2::after {
+  content: '';
+  display: block;
+  width: 3%; /* Short underline width */
+  height: 2px;
+  background-color: #1593C9;
+  position: absolute;
+  left: 4.5%;
+  bottom: 0;
+  transform: translateX(-50%);
+}
+li:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+h3, p, small {
+  margin: 0;
+  padding: 0; /* Ensures full width utilization within li */
+}
+
+h3 {
+  color: #333;
+  font-size: 1.2em;
+  margin: 0 0 5px 0; /* Complete control over all margins */
+}
+
+p {
+  color: #666;
+  font-size: 0.6em;
+  line-height: 1.2;
+  margin: 0; /* Removes all default margins */
+  overflow: hidden; /* Hides any overflow beyond the first line */
+  text-overflow: ellipsis; /* Adds ellipsis when text overflows */
+  white-space: nowrap; /* Prevents text from wrapping to a new line */
+  display: block; /* Ensures the element behaves as a block-level element */
+  width: 100%; /* Ensure it takes full width of its parent, adjust if needed */
+}
+
+
+
+
+
+small {
+  display: block;
+  margin-top: 10px;
+  font-size: 0.8rem;
+  color: #999;
+  padding-top: 50px;
+}
+
+a {
+  color: #0066cc;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: #ff6600;
+}
+
+.loading-text {
+  font-style: italic;
+  color: #888;
+}
+.button-container {
+  margin-top: 50px; /* Space above the buttons */
+  margin-bottom: 10px; /* Space below the buttons, before the small tag */
+  display: flex;
+  flex-direction: column; /* Stacks buttons vertically */
+  align-items: center; /* Center-aligns the buttons */
+}
+
+.button-container button {
+  padding: 5px 10px; /* Button padding, adjust as necessary */
+  background-color: #0066cc; /* A basic color, customize as needed */
+  color: white; /* Text color */
+  border: none; /* Removes default border */
+  border-radius: 4px; /* Optional: adds rounded corners */
+  cursor: pointer; /* Changes cursor to pointer on hover */
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+  margin-top: 5px; /* Adds space between buttons */
+  width: 150px;
+}
+
+.button-container button:first-child {
+  margin-top: 0; /* Removes the top margin from the first button */
+}
+
+.button-container button:hover {
+  background-color: #004a99; /* Darker shade on hover, adjust as needed */
+}
+
