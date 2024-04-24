@@ -1,14 +1,4 @@
-<header>
-  <h1>Lms Ui Project</h1>
-  <nav>
-    <a *ngIf="authService.isLoggedIn()" routerLink="/home">Home</a>
-    <a *ngIf="authService.isLoggedIn()" routerLink="/about">About</a>
-    <a *ngIf="!authService.isLoggedIn()" routerLink="/register">Register</a>
-    <a *ngIf="!authService.isLoggedIn()" routerLink="/login">Login</a>
-    <a *ngIf="authService.isLoggedIn()" routerLink="/profile">Profile</a>
-    <button *ngIf="authService.isLoggedIn()" (click)="authService.logout()">Logout</button>
-  </nav>
-</header>
+<app-navbar></app-navbar>
 
 <main>
   <router-outlet></router-outlet>

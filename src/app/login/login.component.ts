@@ -40,20 +40,10 @@ export class LoginComponent implements OnInit {
         } else {
           this.router.navigate(['/student-dashboard']);
         }
-      }).catch(error => {
-            console.error('Login error:', error);
-            alert('Login failed!');
-          });
+      })
+    }).catch(error => {
+      console.error('Login error:', error);
+      alert('Login failed!');
     });
-    
-    // this.authService.login(email, password)
-    //   .then(() => {
-    //     alert('Login successful!');
-    //     this.router.navigate(['/']);
-    //   })
-    //   .catch(error => {
-    //     console.error('Login error:', error);
-    //     alert('Login failed!');
-    //   });
   }
 }

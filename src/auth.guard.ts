@@ -21,7 +21,7 @@ export class AuthGuard implements CanActivate {
       const user = await this.authService.getCurrentUser();
 
       if (!user) {
-        this.router.navigate(['/login']);  // Redirect user to login if not authenticated
+        this.router.navigate(['/login']);
         return false;
       }
 
@@ -29,12 +29,12 @@ export class AuthGuard implements CanActivate {
       if (role === expectedRole) {
         return true;
       } else {
-        this.router.navigate(['/unauthorized']);  // Handle unauthorized access
+        this.router.navigate(['/unauthorized']); 
         return false;
       }
     } catch (error) {
       console.error('Error during authorization:', error);
-      this.router.navigate(['/error']);  // Handle errors
+      this.router.navigate(['/error']);
       return false;
     }
   }

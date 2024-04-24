@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/register', pathMatch: 'full' },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'course-materials', component: CourseMaterialsComponent },
+  { path: 'courses', component: CourseMaterialsComponent },
   { path: 'submit-assignment', component: AssignmentSubmissionComponent },
   { path: 'track-progress', component: ProgressTrackingComponent },
   { path: 'student-dashboard', component: StudentDashboardComponent },

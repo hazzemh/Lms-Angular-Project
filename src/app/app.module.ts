@@ -15,6 +15,7 @@ import { CourseCardComponent } from './student components/course-card/course-car
 import { CourseMaterialsComponent } from './student components/course-materials/course-materials.component';
 import { ProgressTrackingComponent } from './student components/progress-tracking/progress-tracking.component';
 import { StudentDashboardComponent } from './student components/student-dashboard/student-dashboard.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { StudentDashboardComponent } from './student components/student-dashboar
     AssignmentSubmissionComponent,
     ProgressTrackingComponent,
     StudentDashboardComponent,
-    CourseCardComponent
+    CourseCardComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
