@@ -23,7 +23,8 @@ export class RegisterComponent implements OnInit {
     this.registerForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      role: ['student', Validators.required] // Include role in the form
+      name: ['', Validators.required],
+      role: ['student', Validators.required]
     });
   }
 
@@ -35,9 +36,9 @@ export class RegisterComponent implements OnInit {
     this.isLoading = true;
 
     try {
-      const { email, password, role } = this.registerForm.value;
-      await this.authService.register(email, password, role);
-      alert('Registration successful!');
+      const { email, password, name, role } = this.registerForm.value;
+      await this.authService.register(email, password,name, role);
+      alert('Registration successful, waiting for admin to activate it.');
       this.router.navigate(['/login']);
     } catch (error) {
       console.error('Registration error:', error);

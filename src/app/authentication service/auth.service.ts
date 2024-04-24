@@ -57,14 +57,16 @@ export class AuthService {
     });
   }
 
-  register(email: string, password: string, role: string): Promise<void> {
+  register(email: string, password: string, name:string, role: string): Promise<void> {
     return this.afAuth.createUserWithEmailAndPassword(email, password)
       .then(userCredential => {
         const user = userCredential.user;
         if (user) {
           return this.firestore.collection('users').doc(user.uid).set({
             email: email,
-            role: role
+            name: name,
+            role: role,
+            status : "inactive"
           });
         } else {
           throw new Error('User registration failed');

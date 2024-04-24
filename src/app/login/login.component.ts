@@ -24,26 +24,39 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  async onSubmit() {
     if (this.loginForm.invalid) {
       return;
     }
-
+  
     const { email, password } = this.loginForm.value;
-
-    this.authService.login(email, password).then(userCredential => {
-      this.firebaseService.getUserRole(userCredential.user.uid).then(role => {
-        if (role === 'admin') {
-          this.router.navigate(['/admin-dashboard']);
-        } else if (role === 'instructor') {
-          this.router.navigate(['/instructor-dashboard']);
-        } else {
-          this.router.navigate(['/student-dashboard']);
+  
+    try {
+      const userCredential = await this.authService.login(email, password);
+      const userData = await this.firebaseService.getUserData(userCredential.user.uid);
+  
+      if (userData && userData.status === 'active') {
+        switch (userData.role) {
+          case 'admin':
+            this.router.navigate(['/admin-dashboard']);
+            break;
+          case 'instructor':
+            this.router.navigate(['/instructor-dashboard']);
+            break;
+          case 'student':
+            this.router.navigate(['/student-dashboard']);
+            break;
+          default:
+            alert('Your role is not recognized in the system.');
+            break;
         }
-      })
-    }).catch(error => {
+      } else {
+        alert('Your account is either inactive or your role/status is incomplete.');
+      }
+    } catch (error) {
       console.error('Login error:', error);
-      alert('Login failed!');
-    });
+      alert('Login failed: ' + (error as Error).message);
+    }
   }
+
 }
