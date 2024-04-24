@@ -6,15 +6,16 @@ import { AssignmentSubmissionComponent } from './student components/assignment-s
 import { CourseMaterialsComponent } from './student components/course-materials/course-materials.component';
 import { ProgressTrackingComponent } from './student components/progress-tracking/progress-tracking.component';
 import { StudentDashboardComponent } from './student components/student-dashboard/student-dashboard.component';
+import { AuthGuard } from '../auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/register', pathMatch: 'full' },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'courses', component: CourseMaterialsComponent },
-  { path: 'submit-assignment', component: AssignmentSubmissionComponent },
-  { path: 'track-progress', component: ProgressTrackingComponent },
-  { path: 'student-dashboard', component: StudentDashboardComponent },
+  { path: 'courses', component: CourseMaterialsComponent, canActivate: [AuthGuard], data: { expectedRole: 'student' } },
+  { path: 'assignments', component: AssignmentSubmissionComponent, canActivate: [AuthGuard], data: { expectedRole: 'student' } },
+  { path: 'track-progress', component: ProgressTrackingComponent , canActivate: [AuthGuard], data: { expectedRole: 'student' }},
+  { path: 'student-dashboard', component: StudentDashboardComponent, canActivate: [AuthGuard], data: { expectedRole: 'student' } },
   { path: '**', redirectTo: '/register' }
 ];
 

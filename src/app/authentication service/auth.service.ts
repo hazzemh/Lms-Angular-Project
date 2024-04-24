@@ -3,6 +3,9 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { User } from '@angular/fire/auth';
+import firebase from 'firebase/compat/app';
+
 
 interface UserData {
   email: string;
@@ -85,8 +88,12 @@ export class AuthService {
     return this.userRole.asObservable();
   }
 
-  getCurrentUser() {
-    return this.afAuth.currentUser;
+  getCurrentUser(): Promise<User | null> {
+    return this.afAuth.currentUser as Promise<User | null>;
+  }
+
+  getCurrentUserObservable(): Observable<firebase.User | null> {
+    return this.afAuth.authState;
   }
 
   logout(): Promise<void> {

@@ -1,9 +1,7 @@
 <!-- Assuming your Angular component template -->
 <div class="course-list-container">
   <h2>Courses</h2>
-  <ul>
-      <li *ngFor="let course of courses">
-          {{ course.title }} - {{ course.description }}
-      </li>
-  </ul>
+  <div *ngFor="let course of courses">
+    <app-course-card [course]="course"></app-course-card>
+  </div>
 </div>

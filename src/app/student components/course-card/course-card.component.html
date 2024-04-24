@@ -1,5 +1,5 @@
 <div class="course-card">
-    <h3>{{ course.title }}</h3>
-    <p>{{ course.description }}</p>
-  </div>
-  
+  <h3>{{ course.title }}</h3>
+  <p>{{ course.description }}</p>
+  <button (click)="enrollCourse(course.id)">Enroll</button>
+</div>
