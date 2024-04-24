@@ -16,6 +16,8 @@ import { CourseMaterialsComponent } from './student components/course-materials/
 import { ProgressTrackingComponent } from './student components/progress-tracking/progress-tracking.component';
 import { StudentDashboardComponent } from './student components/student-dashboard/student-dashboard.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { AssignmentsComponent } from './student components/assignments/assignments.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     ProgressTrackingComponent,
     StudentDashboardComponent,
     CourseCardComponent,
-    NavbarComponent
+    NavbarComponent,
+    AssignmentsComponent
   ],
   imports: [
     BrowserModule,
@@ -37,9 +40,11 @@ import { NavbarComponent } from './navbar/navbar.component';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireDatabaseModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
   ],
-  providers: [],
+  providers: [
+    provideAnimationsAsync()
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

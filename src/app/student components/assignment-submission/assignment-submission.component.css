@@ -1,64 +1,84 @@
-Styles for the assignment submission form
-.assignment-form-container {
-    max-width: 600px;
-    margin: 2rem auto;
-    padding: 1.5rem;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    transition: all 0.3s ease;
-}
-
-.assignment-form-container h2 {
+/* Basic styling for the container */
+.assignment-submission-container {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    padding: 20px;
+    max-width: 500px;
+    margin: 20px auto;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: box-shadow 0.3s ease-in-out;
+  }
+  
+  /* Header styling */
+  .assignment-submission-container h2 {
     color: #333;
+    font-size: 24px;
     text-align: center;
-    margin-bottom: 1.5rem;
-}
-
-.assignment-form-container select,
-.assignment-form-container input[type="file"] {
-    width: 100%;
-    padding: 0.8rem;
-    margin-bottom: 1rem;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    transition: border-color 0.3s ease;
-}
-
-.assignment-form-container select:focus,
-.assignment-form-container input[type="file"]:focus {
-    outline: none;
-    border-color: #007BFF;
-    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
-}
-
-.assignment-form-container button {
-    width: 100%;
-    padding: 0.8rem;
-    background-color: #007BFF;
+    margin-bottom: 20px;
+  }
+  
+  /* Styling for the file input and label */
+  .file-label {
+    display: block;
+    background-color: #007bff;
     color: white;
-    font-size: 1rem;
-    border: none;
-    border-radius: 4px;
+    text-align: center;
+    padding: 10px 20px;
+    margin-top: 10px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.assignment-form-container button:hover {
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  input[type="file"] {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+  
+  /* Hover and focus effects for the file label */
+  .file-label:hover, .file-label:focus {
     background-color: #0056b3;
-}
-
-.assignment-form-container button:active {
-    transform: translateY(2px);
-}
-
-/* Adding a simple loading animation when the submit button is clicked */
-.assignment-form-container button:disabled {
-    background-color: #ccc;
+  }
+  
+  /* Button styling */
+  .submit-button {
+    display: block;
+    width: 100%;
+    background-color: #28a745;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .submit-button:hover {
+    background-color: #218838;
+  }
+  
+  .submit-button:disabled {
+    background-color: #6c757d;
     cursor: not-allowed;
-}
-
-/* Hover effect on the form container */
-.assignment-form-container:hover {
-    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-}
+  }
+  
+  /* Error message styling */
+  .error-message {
+    color: #dc3545;
+    font-size: 16px;
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  /* Additional message styling */
+  .assignment-submission-container p {
+    text-align: center;
+    color: #6c757d;
+  }
+  

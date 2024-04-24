@@ -1,12 +1,12 @@
-<div class="assignment-form-container">
-  <h2>Submit Assignment</h2>
-  <select [(ngModel)]="selectedAssignmentId"
-    (change)="selectedAssignmentId ? loadAssignments(selectedAssignmentId) : null">
-    <option *ngFor="let assignment of assignments" [value]="assignment.id">
-      {{ assignment.title }}
-    </option>
-  </select>
-  <input type="file" (change)="onFileSelected($event)">
-  <button (click)="selectedAssignmentId ? onSubmitAssignment(selectedAssignmentId) : null"
-    [disabled]="!selectedAssignmentId || !selectedFile">Submit</button>
+<div class="assignment-submission-container">
+  <h2>Submit Your Assignment</h2>
+  <div *ngIf="studentId">
+    <input type="file" (change)="onFileSelected($event)" id="file">
+    <label for="file" class="file-label">Choose a file</label>
+    <button (click)="onSubmitAssignment()" [disabled]="!selectedFile" class="submit-button">Submit Assignment</button>
+    <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+  </div>
+  <div *ngIf="!studentId">
+    <p>Please log in to submit assignments.</p>
+  </div>
 </div>

@@ -1,0 +1,26 @@
+<!-- List of Assignments -->
+<div *ngIf="coursesWithAssignments$ | async as coursesWithAssignments">
+    <div *ngFor="let course of coursesWithAssignments">
+      <h3>{{ course.name }}</h3>
+      <ul class="assignment-list">
+        <li *ngFor="let assignment of course.assignments">
+          <span>
+            {{ assignment.title }} - Due: {{ assignment.dueDate | date }}
+          </span>
+          <button (click)="openSubmissionDialog(course.id, assignment.id)">Submit Assignment</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+  
+  <!-- Submission Modal -->
+  <div id="submissionModal" class="modal" [ngStyle]="{ 'display': isSubmissionDialogOpen ? 'block' : 'none' }">
+    <div class="modal-content">
+      <h2>Submit Assignment</h2>
+      <ng-container *ngIf="selectedAssignmentId && selectedCourseId">
+        <app-assignment-submission [assignmentId]="selectedAssignmentId" [courseId]="selectedCourseId"></app-assignment-submission>
+      </ng-container>
+      <button (click)="closeSubmissionDialog()">Close</button>
+    </div>
+  </div>
+  

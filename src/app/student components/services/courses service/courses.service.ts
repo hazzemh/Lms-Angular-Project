@@ -5,10 +5,6 @@ import { AuthService } from '../../../authentication service/auth.service';
 import { switchMap, of, forkJoin, tap, combineLatest, map } from 'rxjs';
 import { Course } from '../../../models/course.model';
 
-interface Enrollment {
-  courseId: string;
-}
-
 @Injectable({
   providedIn: 'root'
 })
@@ -26,6 +22,11 @@ export class CoursesService {
   getStudentCourses(studentId: string): Observable<any[]> {
     return this.db.collection('courses', ref => ref.where('studentId', '==', studentId)).valueChanges();
   }
+
+  getAssignmentsForCourse(courseId: string): Observable<any[]> {
+    return this.db.collection(`courses/${courseId}/assignments`).valueChanges({ idField: 'id' });
+  }
+
 
   enrollStudentInCourse(studentId: string, courseId: string): Promise<void> {
     return this.db.collection('users').doc(studentId)

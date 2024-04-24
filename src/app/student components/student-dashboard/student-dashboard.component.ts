@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AssignmentsService } from '../services/assignments service/assignments.service';
 import { CoursesService } from '../services/courses service/courses.service';
 import { AuthService } from '../../authentication service/auth.service';
 import { from, Observable, of, switchMap } from 'rxjs';

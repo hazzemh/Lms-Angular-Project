@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { AssignmentsService } from '../services/assignments service/assignments.service';
+import { AuthService } from '../../authentication service/auth.service';
 
 @Component({
   selector: 'app-assignment-submission',
@@ -7,17 +8,21 @@ import { AssignmentsService } from '../services/assignments service/assignments.
   styleUrl: './assignment-submission.component.css'
 })
 export class AssignmentSubmissionComponent {
-  assignments: any[] = [];
   selectedFile: File | null = null;
-  selectedAssignmentId: string | null = null;
-  
-  constructor(private assignmentsService: AssignmentsService) {}
+  @Input()
+  assignmentId!: string; 
+  @Input()
+  courseId!: string;
+  errorMessage: string | null = null;
+  studentId: string | null = null;
 
-  loadAssignments(courseId: string): void {
-    this.assignmentsService.getAssignmentsByCourse(courseId).subscribe(assignments => {
-      this.assignments = assignments;
-    }, error => {
-      console.error('Failed to load assignments:', error);
+  constructor(private assignmentsService: AssignmentsService, private authService: AuthService) {
+    this.authService.getCurrentUserObservable().subscribe(user => {
+      if (user) {
+        this.studentId = user.uid; 
+      } else {
+        this.studentId = null;
+      }
     });
   }
 
@@ -29,17 +34,29 @@ export class AssignmentSubmissionComponent {
     }
   }
 
-  onSubmitAssignment(assignmentId: string): void {
+  onSubmitAssignment(): void {
+    if (!this.assignmentId || !this.studentId || !this.courseId) {
+      alert('Missing assignment details');
+      return;
+    }
+
     if (this.selectedFile) {
-      this.assignmentsService.uploadFileAndGetMetadata('assignment_submissions', this.selectedFile)
-        .subscribe({
-          next: (fileUrl: string) => {
-            this.assignmentsService.submitAssignment(assignmentId, 'studentId', fileUrl)
-              .then(() => alert('Assignment submitted successfully'))
-              .catch(error => console.error('Failed to submit assignment', error));
-          },
-          error: (error) => console.error('Failed to upload file:', error)
-        });
+      this.assignmentsService.uploadFileAndGetMetadata(
+        'assignment_submissions', 
+        this.selectedFile, 
+        this.assignmentId, 
+        this.studentId, 
+        this.courseId
+      ).subscribe({
+        next: (docRef) => {
+          console.log('Assignment submitted successfully', docRef.id);
+          alert('Assignment submitted successfully');
+        },
+        error: (error) => {
+          console.error('Failed to submit assignment:', error);
+          alert('Assignment submitted successfully');
+        }
+      });
     } else {
       alert('No file selected');
     }
