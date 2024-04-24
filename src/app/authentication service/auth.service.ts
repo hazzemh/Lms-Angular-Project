@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { User } from '@angular/fire/auth';
 import firebase from 'firebase/compat/app';
 
@@ -98,6 +98,12 @@ export class AuthService {
     return this.afAuth.authState;
   }
 
+  getCurrentStudentObservable(): Observable<string | null> {
+    return this.afAuth.authState.pipe(
+      map(user => user ? user.uid : null)
+    );
+  }
+  
   logout(): Promise<void> {
     return this.afAuth.signOut().then(() => {
       this.isUserLoggedIn.next(false);

@@ -15,16 +15,16 @@ export class CourseCardComponent {
     private authService: AuthService
   ) {}
 
-  enrollCourse(courseId: string) {
-    this.authService.getCurrentUser().then(user => {
-      if (user) {
-        this.coursesService.enrollStudentInCourse(user.uid, courseId).then(() => {
-          alert('Enrollment successful!');
-        }).catch(error => {
-          console.error('Enrollment failed:', error);
-          alert('Failed to enroll in course.');
-        });
-      }
-    });
-  }
+  // enrollCourse(courseId: string) {
+  //   this.authService.getCurrentUser().then(user => {
+  //     if (user) {
+  //       this.coursesService.enrollStudentInCourse(user.uid, courseId).then(() => {
+  //         alert('Enrollment successful!');
+  //       }).catch(error => {
+  //         console.error('Enrollment failed:', error);
+  //         alert('Failed to enroll in course.');
+  //       });
+  //     }
+  //   });
+  // }
 }

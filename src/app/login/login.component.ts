@@ -51,6 +51,7 @@ export class LoginComponent implements OnInit {
             break;
         }
       } else {
+        this.authService.logout();
         alert('Your account is either inactive or your role/status is incomplete.');
       }
     } catch (error) {

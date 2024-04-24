@@ -21,7 +21,7 @@ export class FirebaseService {
 
       if (docSnapshot?.exists) {
         const data = docSnapshot?.data() as { role: string };
-        return data?.role ?? 'default_role'; // Return default role if missing
+        return data?.role ?? 'default_role';
       } else {
         console.error('User document not found:', uid);
         return null;

@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs/internal/Observable';
 import { AuthService } from '../../../authentication service/auth.service';
-import { switchMap, of, forkJoin, tap, combineLatest } from 'rxjs';
+import { switchMap, of, forkJoin, tap, combineLatest, map } from 'rxjs';
+import { Course } from '../../../models/course.model';
 
 interface Enrollment {
   courseId: string;
@@ -45,6 +46,18 @@ export class CoursesService {
         }
       })
     );
+  }
+
+  getAssignedCourses(userId: string): Observable<Course[]> {
+    return this.db.collection<Course>('courses', ref => ref.where('enrolledStudents', 'array-contains', userId))
+      .snapshotChanges()
+      .pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Course;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        }))
+      );
   }
 }
 

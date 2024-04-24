@@ -1,40 +1,57 @@
-/* Styles for the course list */
-.course-list-container {
-    max-width: 800px;
-    margin: 2rem auto;
-    padding: 1rem;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    transition: box-shadow 0.3s ease;
-}
-
-.course-list-container h2 {
-    color: #333;
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 1.8rem;
-}
-
-.course-list-container ul {
-    list-style: none;
+/* course-materials.component.css */
+ul {
+    list-style-type: none;
     padding: 0;
     margin: 0;
-}
-
-.course-list-container ul li {
-    padding: 10px 15px;
-    margin: 5px 0;
+  }
+  
+  li {
+    margin-bottom: 20px;
     border-bottom: 1px solid #eee;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.course-list-container ul li:hover {
-    background-color: #f5f5f5;
-    transform: scale(1.02);
-}
-
-.course-list-container ul li:last-child {
-    border-bottom: none;
-}
+    padding-bottom: 10px;
+    background: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  li:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  h3 {
+    color: #333;
+    font-size: 1.2em;
+    margin: 0.5em 0;
+  }
+  
+  p {
+    color: #666;
+    font-size: 1em;
+    line-height: 1.5;
+  }
+  
+  small {
+    display: block;
+    margin-top: 10px;
+    font-size: 0.8rem;
+    color: #999;
+  }
+  
+  /* Adding animations and interactivity */
+  a {
+    color: #0066cc;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  a:hover {
+    color: #ff6600;
+  }
+  
+  /* Loading text styling */
+  .loading-text {
+    font-style: italic;
+    color: #888;
+  }
+  
