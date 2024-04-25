@@ -1,4 +1,22 @@
 /* General styling for the courses container */
+h1 {
+  color: #333;
+  padding: 10px 40px;
+  border-radius: 5px;
+  position: relative;
+  font-size: 20px;
+}
+h1::after {
+  content: '';
+  display: block;
+  width: 3%; /* Short underline width */
+  height: 2px;
+  background-color: #1593C9;
+  position: absolute;
+  left: 4.5%;
+  bottom: 0;
+  transform: translateX(-50%);
+}
 .course-container {
   max-width: 800px;
   margin: 20px auto;
@@ -19,7 +37,7 @@
 /* Styling for the assignment list */
 .assignment-list {
   list-style: none;
-  padding: 0;
+  padding: 15px;
   margin: 0;
 }
 
@@ -110,4 +128,9 @@
 
 .modal-content button:hover {
   background-color: #c82333;
+}
+h3{
+  font-size: 24px;
+  padding-left: 20px;
+  padding-top: 20px;
 }

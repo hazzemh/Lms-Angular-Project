@@ -1,6 +1,6 @@
 /* navbar.component.css */
 header {
-  background-color: #1593C9; /* A nice shade of dark blue */
+  background-color: #0056b3; /* A nice shade of dark blue */
   color: white;
   padding: 10px 30px;
   display: flex;
@@ -49,7 +49,7 @@ nav a, nav button {
 }
 
 nav a:hover, nav button:hover {
-  color: #f1e50a;
+  color: #a6e1fa;
 }
 
 nav a::after, nav button::after {
@@ -59,7 +59,7 @@ nav a::after, nav button::after {
   left: 0;
   width: 0;
   height: 2px;
-  background-color: #f1e50a;
+  background-color: #a6e1fa;
   transition: width 0.3s;
 }
 
@@ -69,13 +69,13 @@ nav a:hover::after, nav button:hover::after {
 
 button {
   padding: 5px 15px;
-  background-color: #004494; /* A slightly darker blue */
+  background-color: #0056b3; /* A slightly darker blue */
   border: 1px solid #a6e1fa;
   border-radius: 5px;
   transition: background-color 0.3s, transform 0.3s;
 }
 
 button:hover {
-  background-color: #003570; /* Even darker for the hover state */
+  background-color: #0056b3; /* Even darker for the hover state */
   transform: translateY(-2px);
 }
