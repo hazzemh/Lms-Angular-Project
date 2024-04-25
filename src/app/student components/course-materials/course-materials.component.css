@@ -3,7 +3,7 @@ ul {
   padding: 0;
   margin: 80px auto; /* Centers the list */
   width: 90%; /* Adjusts the width of the ul */
-  max-width: 1200px; /* Ensures the ul does not get too wide */
+  max-width: 800px; /* Ensures the ul does not get too wide */
   display: flex; /* Enables flexbox layout */
   flex-wrap: wrap; /* Allows items to wrap onto the next line */
   justify-content: space-around; /* Distributes space around items */
@@ -21,9 +21,11 @@ li {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   height: 300px;
-  width: 200px;
+  flex-basis: 30%; /* Each li takes up 30% of the ul width */
+  max-width: 30%; /* Maximum width of each li is 30% of the ul */
   box-sizing: border-box; /* Includes padding and border in the width and height */
 }
+
 h2 {
   color: #333;
   padding: 10px 40px;
@@ -62,8 +64,7 @@ p {
   color: #666;
   font-size: 0.6em;
   line-height: 1.2;
-  margin: 0; /* Removes all default margins */
-  overflow: hidden; /* Hides any overflow beyond the first line */
+  margin: 0; /* Removes all default margins */ /* Hides any overflow beyond the first line */
   text-overflow: ellipsis; /* Adds ellipsis when text overflows */
   white-space: nowrap; /* Prevents text from wrapping to a new line */
   display: block; /* Ensures the element behaves as a block-level element */
@@ -79,7 +80,7 @@ small {
   margin-top: 10px;
   font-size: 0.8rem;
   color: #999;
-  padding-top: 50px;
+  padding-top: 35px;
 }
 
 a {
@@ -102,6 +103,7 @@ a:hover {
   display: flex;
   flex-direction: column; /* Stacks buttons vertically */
   align-items: center; /* Center-aligns the buttons */
+  padding-left: 25px;
 }
 
 .button-container button {
