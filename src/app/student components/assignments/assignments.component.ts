@@ -30,22 +30,24 @@ export class AssignmentsComponent implements OnInit {
   ngOnInit(): void {
     this.coursesWithAssignments$ = this.authService.getCurrentUserObservable().pipe(
       switchMap(user => user ? this.courseService.getAssignedCourses(user.uid) : of([])),
-      switchMap(courses => 
+      switchMap(courses =>
         combineLatest(
           courses.filter(course => course.id).map(course =>
             this.courseService.getAssignmentsForCourse(course.id!).pipe(
-              map(assignments => ({
+              map(assignments => assignments.length > 0 ? {
                 id: course.id as string,
                 name: course.title,
                 assignments: assignments
-              }))
+              } : null)
             )
           )
         )
       ),
+      map(results => results.filter((course): course is CourseWithAssignments => course !== null)),
       map(this.convertTimestamps)
     );
   }
+  
 
   openSubmissionDialog(courseId: string, assignmentId: string): void {
     this.selectedCourseId = courseId;
