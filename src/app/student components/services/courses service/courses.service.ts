@@ -28,6 +28,24 @@ export class CoursesService {
       catchError(error => throwError(() => new Error(`Error adding course: ${error.message}`)))
     );
   }
+
+  addAssignment(courseId: string, assignmentData: any): Promise<void> {
+    return new Promise((resolve, reject) => {
+      const assignmentsRef = this.db.collection('courses').doc(courseId).collection('assignments');
+      assignmentsRef.add({
+        ...assignmentData,
+        createdOn: new Date()  // Optionally include other metadata like creation date
+      })
+      .then(docRef => {
+        console.log(`Assignment added with ID: ${docRef.id}`);
+        resolve();
+      })
+      .catch(error => {
+        console.error('Error adding assignment:', error);
+        reject(error);
+      });
+    });
+  }
   
   getMyCourses(instructorId: string): Observable<Course[]> {
     return this.db.collection<Course>('courses', ref => 
