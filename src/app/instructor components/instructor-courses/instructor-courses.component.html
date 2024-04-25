@@ -1,0 +1,12 @@
+<!-- my-courses.component.html -->
+<div class="container" *ngIf="myCourses$ | async as myCourses; else noCourses">
+    <h2>My Courses</h2>
+    <div *ngFor="let course of myCourses" class="course">
+      <h3>{{ course.title }}</h3>
+      <p>{{ course.description }}</p>
+    </div>
+  </div>
+  <ng-template #noCourses>
+    <p class="no-courses">No courses found.</p>
+  </ng-template>
+  

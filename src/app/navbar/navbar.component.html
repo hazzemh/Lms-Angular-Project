@@ -2,11 +2,22 @@
 <header>
   <h1>LMS</h1>
   <nav>
-    <a *ngIf="isLoggedIn$ | async" routerLink="/student-dashboard">Home</a>
-    <a *ngIf="isLoggedIn$ | async" routerLink="/courses">Courses</a>
-    <a *ngIf="isLoggedIn$ | async" routerLink="/assignments">Assignments</a>
-    <a *ngIf="isLoggedIn$ | async" routerLink="/grades">Grades</a>
-    <a *ngIf="isLoggedIn$ | async" routerLink="/competion-status">Completion Status</a>
+    <!-- Common Home link for all logged-in users -->
+    <!-- <a *ngIf="isLoggedIn$ | async" routerLink="/home">Home</a> -->
+
+    <!-- Instructor-specific links -->
+    <a *ngIf="(isLoggedIn$ | async) && (userRole$ | async) === 'instructor'" routerLink="/instructor-dashboard">Home</a>
+    <a *ngIf="(isLoggedIn$ | async) && (userRole$ | async) === 'instructor'" routerLink="/course-creation">Add Course</a>
+    <a *ngIf="(isLoggedIn$ | async) && (userRole$ | async) === 'instructor'" routerLink="/my-courses">My Courses</a>
+
+    <!-- Student-specific links -->
+    <a *ngIf="(isLoggedIn$ | async) && (userRole$ | async) === 'student'" routerLink="/student-dashboard">Home</a>
+    <a *ngIf="(isLoggedIn$ | async) && (userRole$ | async) === 'student'" routerLink="/courses">Courses</a>
+    <a *ngIf="(isLoggedIn$ | async) && (userRole$ | async) === 'student'" routerLink="/assignments">Assignments</a>
+    <a *ngIf="(isLoggedIn$ | async) && (userRole$ | async) === 'student'" routerLink="/grades">Grades</a>
+    <a *ngIf="(isLoggedIn$ | async) && (userRole$ | async) === 'student'" routerLink="/completion-status">Completion Status</a>
+
+    <!-- Links for non-logged-in users -->
     <a *ngIf="!(isLoggedIn$ | async)" routerLink="/register">Register</a>
     <a *ngIf="!(isLoggedIn$ | async)" routerLink="/login">Login</a>
   </nav>

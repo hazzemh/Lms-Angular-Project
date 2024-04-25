@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs/internal/Observable';
 import { AuthService } from '../../../authentication service/auth.service';
-import { switchMap, of, forkJoin, tap, combineLatest, map } from 'rxjs';
+import { switchMap, of, combineLatest, map, catchError, first, throwError } from 'rxjs';
 import { Course } from '../../../models/course.model';
 
 @Injectable({
@@ -11,7 +11,31 @@ import { Course } from '../../../models/course.model';
 export class CoursesService {
   constructor(private db: AngularFirestore, private authService: AuthService) { }
 
-  getAllCourses() {
+  addCourse(courseData: any): Observable<any> {
+    return this.authService.getCurrentUserObservable().pipe(
+      first(),
+      switchMap(user => {
+        if (user) {
+          const course = {
+            ...courseData,
+            instructorId: user.uid
+          };
+          return this.db.collection('courses').add(course);
+        } else {
+          return throwError(() => new Error('No authenticated user available'));
+        }
+      }),
+      catchError(error => throwError(() => new Error(`Error adding course: ${error.message}`)))
+    );
+  }
+  
+  getMyCourses(instructorId: string): Observable<Course[]> {
+    return this.db.collection<Course>('courses', ref => 
+      ref.where('instructorId', '==', instructorId))
+      .valueChanges({ idField: 'id' });
+  }
+
+  getAllCourses(): Observable<any[]> {
     return this.db.collection('courses').valueChanges({ idField: 'id' });
   }
 

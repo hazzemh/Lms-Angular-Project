@@ -8,6 +8,9 @@ import { ProgressTrackingComponent } from './student components/progress-trackin
 import { StudentDashboardComponent } from './student components/student-dashboard/student-dashboard.component';
 import { AuthGuard } from '../auth.guard';
 import { AssignmentsComponent } from './student components/assignments/assignments.component';
+import { InstructorDashboardComponent } from './instructor components/instructor-dashboard/instructor-dashboard.component';
+import { CourseCreationComponent } from './instructor components/course-creation/course-creation.component';
+import { InstructorCoursesComponent } from './instructor components/instructor-courses/instructor-courses.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/register', pathMatch: 'full' },
@@ -17,6 +20,9 @@ const routes: Routes = [
   { path: 'assignments', component: AssignmentsComponent, canActivate: [AuthGuard], data: { expectedRole: 'student' } },
   { path: 'track-progress', component: ProgressTrackingComponent , canActivate: [AuthGuard], data: { expectedRole: 'student' }},
   { path: 'student-dashboard', component: StudentDashboardComponent, canActivate: [AuthGuard], data: { expectedRole: 'student' } },
+  { path: 'instructor-dashboard', component:InstructorDashboardComponent, canActivate: [AuthGuard], data: { expectedRole: 'instructor' } },
+  { path: 'course-creation', component:CourseCreationComponent, canActivate: [AuthGuard], data: { expectedRole: 'instructor' } },
+  { path: 'my-courses', component:InstructorCoursesComponent, canActivate: [AuthGuard], data: { expectedRole: 'instructor' } },
   { path: '**', redirectTo: '/register' }
 ];
 

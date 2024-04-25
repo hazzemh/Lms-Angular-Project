@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../authentication service/auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -7,10 +8,13 @@ import { AuthService } from '../authentication service/auth.service';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
-  isLoggedIn$ = this.authService.isLoggedIn();
-  userRole$ = this.authService.getUserRole();
-
-  constructor(private authService: AuthService) { }
+  isLoggedIn$!: Observable<boolean>;
+  userRole$!: Observable<string | null>;
+  
+  constructor(private authService: AuthService) {
+    this.isLoggedIn$ = this.authService.isLoggedIn();
+    this.userRole$ = this.authService.getUserRole();
+  }
 
   logout(): void {
     this.authService.logout();

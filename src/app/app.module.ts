@@ -18,6 +18,9 @@ import { StudentDashboardComponent } from './student components/student-dashboar
 import { NavbarComponent } from './navbar/navbar.component';
 import { AssignmentsComponent } from './student components/assignments/assignments.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { CourseCreationComponent } from './instructor components/course-creation/course-creation.component';
+import { InstructorDashboardComponent } from './instructor components/instructor-dashboard/instructor-dashboard.component';
+import { InstructorCoursesComponent } from './instructor components/instructor-courses/instructor-courses.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +33,10 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     StudentDashboardComponent,
     CourseCardComponent,
     NavbarComponent,
-    AssignmentsComponent
+    AssignmentsComponent,
+    CourseCreationComponent,
+    InstructorDashboardComponent,
+    InstructorCoursesComponent
   ],
   imports: [
     BrowserModule,
