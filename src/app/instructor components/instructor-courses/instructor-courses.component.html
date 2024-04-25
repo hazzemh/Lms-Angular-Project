@@ -1,12 +1,15 @@
-<!-- my-courses.component.html -->
 <div class="container" *ngIf="myCourses$ | async as myCourses; else noCourses">
-    <h2>My Courses</h2>
-    <div *ngFor="let course of myCourses" class="course">
-      <h3>{{ course.title }}</h3>
-      <p>{{ course.description }}</p>
+  <h2>My Courses</h2>
+  <div *ngFor="let course of myCourses" class="course">
+    <h3>{{ course.title }}</h3>
+    <p>{{ course.description }}</p>
+    <div *ngIf="course.id as courseId">
+    <button (click)="addLectures(course.id)" class="btn btn-secondary">Add Lectures</button>
+    <button (click)="addMultimedia(course.id)" class="btn btn-secondary">Add Multimedia</button>
+    <button (click)="addAssignment(course.id)" class="btn btn-secondary">Add Assignment</button>
     </div>
   </div>
-  <ng-template #noCourses>
-    <p class="no-courses">No courses found.</p>
-  </ng-template>
-  
+</div>
+<ng-template #noCourses>
+  <p class="no-courses">No courses found.</p>
+</ng-template>

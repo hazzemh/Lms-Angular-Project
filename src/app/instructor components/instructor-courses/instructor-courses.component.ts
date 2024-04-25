@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Course } from '../../models/course.model';
 import { AuthService } from '../../authentication service/auth.service';
@@ -9,7 +9,7 @@ import { CoursesService } from '../../student components/services/courses servic
   templateUrl: './instructor-courses.component.html',
   styleUrl: './instructor-courses.component.css'
 })
-export class InstructorCoursesComponent implements OnInit{
+export class InstructorCoursesComponent{
   myCourses$!: Observable<Course[]>;
   userId!: string;
   
@@ -22,5 +22,14 @@ export class InstructorCoursesComponent implements OnInit{
     });
   }
 
-  ngOnInit(): void {}
+  addLectures(courseId: string) {
+
+  }
+
+  addMultimedia(courseId: string) {
+  }
+
+  addAssignment(courseId: string) {
+  }
+
 }
