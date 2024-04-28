@@ -1,0 +1,32 @@
+/* welcome.component.css */
+.main-header h1, .announcements-header h2 {
+    color: #333;
+    padding: 10px 40px;
+    border-radius: 5px;
+    position: relative;
+    font-size: 20px;
+}
+
+.main-header h1::after, .announcements-header h2::after {
+    content: '';
+    display: block;
+    width: 3%; /* Short underline width */
+    height: 2px;
+    background-color: #1593C9;
+    position: absolute;
+    left: 4.5%;
+    bottom: 0;
+    transform: translateX(-50%);
+}
+
+p {
+    color: #333;
+    margin-left: 10px;
+    margin-right: 20px;
+    text-align: justify; /* Aligns text to justify */
+    width: 60%; /* Adjust width to manage how text wraps */
+    max-width: 800px; /* Ensures that it does not get too wide on larger screens */
+    margin: 20px 5%; /* Centers the paragraph and adds spacing */
+    line-height: 1.6; /* Adjusts line spacing for better readability */
+}
+

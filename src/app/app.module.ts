@@ -21,6 +21,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { CourseCreationComponent } from './instructor components/course-creation/course-creation.component';
 import { InstructorDashboardComponent } from './instructor components/instructor-dashboard/instructor-dashboard.component';
 import { InstructorCoursesComponent } from './instructor components/instructor-courses/instructor-courses.component';
+import { AdminDashboardComponent } from './admin components/admin-dashboard/admin-dashboard.component';
+import { AccountsManagementComponent } from './admin components/accounts-management/accounts-management.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { InstructorCoursesComponent } from './instructor components/instructor-c
     AssignmentsComponent,
     CourseCreationComponent,
     InstructorDashboardComponent,
-    InstructorCoursesComponent
+    InstructorCoursesComponent,
+    AdminDashboardComponent,
+    AccountsManagementComponent
   ],
   imports: [
     BrowserModule,

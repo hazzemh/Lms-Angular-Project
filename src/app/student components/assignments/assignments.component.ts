@@ -17,15 +17,26 @@ export class AssignmentsComponent implements OnInit {
 
   constructor(private authService: AuthService, private courseService: CoursesService,) {}
 
-  convertTimestamps(coursesWithAssignments: CourseWithAssignments[]) {
-    return coursesWithAssignments.map(course => ({
-      ...course,
-      assignments: course.assignments.map(assignment => ({
-        ...assignment,
-        dueDate: assignment.dueDate.toDate()
-      }))
-    }));
-  }
+  // convertTimestamps(coursesWithAssignments: CourseWithAssignments[]) {
+  //   return coursesWithAssignments.map(course => ({
+  //     ...course,
+  //     assignments: course.assignments.map(assignment => ({
+  //       ...assignment,
+  //       dueDate: this.convertToDate(assignment.dueDate)
+  //     }))
+  //   }));
+  // }
+
+  // convertToDate(timestamp: firebase.firestore.Timestamp | any): Date {
+  //   // Check if timestamp is a Firestore Timestamp instance
+  //   if (timestamp instanceof firebase.firestore.Timestamp) {
+  //     return timestamp.toDate();
+  //   } else if (timestamp instanceof Date) {
+  //     return timestamp; // Already a Date object
+  //   } else {
+  //     return new Date(timestamp); // Convert from string or number to Date
+  //   }
+  // }
 
   ngOnInit(): void {
     this.coursesWithAssignments$ = this.authService.getCurrentUserObservable().pipe(
@@ -44,7 +55,7 @@ export class AssignmentsComponent implements OnInit {
         )
       ),
       map(results => results.filter((course): course is CourseWithAssignments => course !== null)),
-      map(this.convertTimestamps)
+      // map(this.convertTimestamps)
     );
   }
   

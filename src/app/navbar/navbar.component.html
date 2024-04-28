@@ -7,7 +7,8 @@
 
     <!-- Instructor-specific links -->
     <a *ngIf="(isLoggedIn$ | async) && (userRole$ | async) === 'instructor'" routerLink="/instructor-dashboard">Home</a>
-    <a *ngIf="(isLoggedIn$ | async) && (userRole$ | async) === 'instructor'" routerLink="/course-creation">Add Course</a>
+    <a *ngIf="(isLoggedIn$ | async) && (userRole$ | async) === 'instructor'" routerLink="/course-creation">Add
+      Course</a>
     <a *ngIf="(isLoggedIn$ | async) && (userRole$ | async) === 'instructor'" routerLink="/my-courses">My Courses</a>
 
     <!-- Student-specific links -->
@@ -15,7 +16,11 @@
     <a *ngIf="(isLoggedIn$ | async) && (userRole$ | async) === 'student'" routerLink="/courses">Courses</a>
     <a *ngIf="(isLoggedIn$ | async) && (userRole$ | async) === 'student'" routerLink="/assignments">Assignments</a>
     <a *ngIf="(isLoggedIn$ | async) && (userRole$ | async) === 'student'" routerLink="/grades">Grades</a>
-    <a *ngIf="(isLoggedIn$ | async) && (userRole$ | async) === 'student'" routerLink="/completion-status">Completion Status</a>
+    <a *ngIf="(isLoggedIn$ | async) && (userRole$ | async) === 'student'" routerLink="/completion-status">Completion
+      Status</a>
+
+    <!-- Admin-specific links -->
+    <a *ngIf="(isLoggedIn$ | async) && (userRole$ | async) === 'admin'" routerLink="/admin-dashboard">Home</a>
 
     <!-- Links for non-logged-in users -->
     <a *ngIf="!(isLoggedIn$ | async)" routerLink="/register">Register</a>
