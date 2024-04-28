@@ -1,8 +1,21 @@
 /* Basic styling for the dashboard */
 h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
+  color: #333;
+  padding: 10px 40px;
+  border-radius: 5px;
+  position: relative;
+  font-size: 20px;
+  }
+  h2::after {
+    content: '';
+    display: block;
+    width: 7%; /* Short underline width */
+    height: 2px;
+    background-color: #1593C9;
+    position: absolute;
+    left: 6.5%;
+    bottom: 0;
+    transform: translateX(-50%);
   }
   
   table {
@@ -10,6 +23,8 @@ h2 {
     border-collapse: collapse;
     margin: 0 auto;
     box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    padding-top: 100px;
+    margin-top: 30px;
   }
   
   th, td {
