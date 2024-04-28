@@ -15,6 +15,11 @@ export class UserManagementService {
     return this.firestore.collection('users', ref => ref.where('role', '!=', 'admin')).valueChanges({ idField: 'uid' });
   }
 
+  getUsersByRole(role: string): Observable<User[]> {
+    return this.firestore.collection<User>('users', ref => ref.where('role', '==', role))
+      .valueChanges({ idField: 'uid' });
+  }
+
   updateUserStatus(userId: string, status: boolean) {
     return this.firestore.doc(`users/${userId}`).update({ status: status ? 'active' : 'inactive' });
   }

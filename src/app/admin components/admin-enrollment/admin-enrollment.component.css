@@ -1,0 +1,70 @@
+/* admin-enrollment.component.css */
+div {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 30px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2 {
+    text-align: center;
+    color: #33495e;
+    margin-bottom: 20px;
+  }
+  
+  h3 {
+    color: #2a6496;
+    padding: 10px 0;
+    border-bottom: 2px solid #e1e1e1;
+    transition: color 0.3s ease;
+  }
+  
+  h3:hover {
+    color: #204d74;
+  }
+  
+  p {
+    color: #666;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  
+  button {
+    padding: 8px 16px;
+    margin-right: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    outline: none;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  button:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Styling for the remove button */
+  button:nth-of-type(2) {
+    background-color: #f44336;
+  }
+  
+  button:nth-of-type(2):hover {
+    background-color: #e53935;
+  }
+  
+  button:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+}

@@ -13,6 +13,7 @@ import { CourseCreationComponent } from './instructor components/course-creation
 import { InstructorCoursesComponent } from './instructor components/instructor-courses/instructor-courses.component';
 import { AdminDashboardComponent } from './admin components/admin-dashboard/admin-dashboard.component';
 import { AccountsManagementComponent } from './admin components/accounts-management/accounts-management.component';
+import { AdminEnrollmentComponent } from './admin components/admin-enrollment/admin-enrollment.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/register', pathMatch: 'full' },
@@ -20,13 +21,14 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'courses', component: CourseMaterialsComponent, canActivate: [AuthGuard], data: { expectedRole: 'student' } },
   { path: 'assignments', component: AssignmentsComponent, canActivate: [AuthGuard], data: { expectedRole: 'student' } },
-  { path: 'track-progress', component: ProgressTrackingComponent , canActivate: [AuthGuard], data: { expectedRole: 'student' }},
+  { path: 'track-progress', component: ProgressTrackingComponent, canActivate: [AuthGuard], data: { expectedRole: 'student' } },
   { path: 'student-dashboard', component: StudentDashboardComponent, canActivate: [AuthGuard], data: { expectedRole: 'student' } },
-  { path: 'instructor-dashboard', component:InstructorDashboardComponent, canActivate: [AuthGuard], data: { expectedRole: 'instructor' } },
-  { path: 'course-creation', component:CourseCreationComponent, canActivate: [AuthGuard], data: { expectedRole: 'instructor' } },
-  { path: 'my-courses', component:InstructorCoursesComponent, canActivate: [AuthGuard], data: { expectedRole: 'instructor' } },
-  { path: 'admin-dashboard', component:AdminDashboardComponent, canActivate: [AuthGuard], data: { expectedRole: 'admin' } },
-  { path: 'accounts', component:AccountsManagementComponent, canActivate: [AuthGuard], data: { expectedRole: 'admin' } },
+  { path: 'instructor-dashboard', component: InstructorDashboardComponent, canActivate: [AuthGuard], data: { expectedRole: 'instructor' } },
+  { path: 'course-creation', component: CourseCreationComponent, canActivate: [AuthGuard], data: { expectedRole: 'instructor' } },
+  { path: 'my-courses', component: InstructorCoursesComponent, canActivate: [AuthGuard], data: { expectedRole: 'instructor' } },
+  { path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [AuthGuard], data: { expectedRole: 'admin' } },
+  { path: 'accounts', component: AccountsManagementComponent, canActivate: [AuthGuard], data: { expectedRole: 'admin' } },
+  { path: 'course-enrollment', component: AdminEnrollmentComponent, canActivate: [AuthGuard], data: { expectedRole: 'admin' } },
   { path: '**', redirectTo: '/register' }
 ];
 

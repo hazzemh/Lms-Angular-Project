@@ -1,0 +1,13 @@
+<div>
+    <h2>Manage Course Enrollments</h2>
+    <div *ngFor="let course of courses$ | async">
+        <h3>{{ course.title }}</h3>
+        <div *ngFor="let student of students$ | async">
+            <p>{{ student.name }}</p>
+            <button [disabled]="(enrollmentStatus$ | async)?.[course.id]?.[student.uid]"
+                (click)="assignStudent(course.id, student.uid)">Assign to Course</button>
+            <button [disabled]="!(enrollmentStatus$ | async)?.[course.id]?.[student.uid]"
+                (click)="unassignStudent(course.id, student.uid)">Remove from Course</button>
+        </div>
+    </div>
+</div>

@@ -2,14 +2,52 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs/internal/Observable';
 import { AuthService } from '../../../authentication service/auth.service';
-import { switchMap, of, combineLatest, map, catchError, first, throwError } from 'rxjs';
+import { switchMap, of, combineLatest, map, catchError, first, throwError, forkJoin } from 'rxjs';
 import { Course } from '../../../models/course.model';
+import firebase from 'firebase/compat/app';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CoursesService {
   constructor(private db: AngularFirestore, private authService: AuthService) { }
+
+
+  addStudentToCourse(courseId: string, studentId: string): Promise<void> {
+    return this.db.collection('courses').doc(courseId).update({
+      enrolledStudents: firebase.firestore.FieldValue.arrayUnion(studentId)
+    });
+  }
+
+  removeStudentFromCourse(courseId: string, studentId: string): Promise<void> {
+    return this.db.collection('courses').doc(courseId).update({
+      enrolledStudents: firebase.firestore.FieldValue.arrayRemove(studentId)
+    });
+  }
+
+  getCourseById(courseId: string): Observable<any> {
+    return this.db.collection('courses').doc(courseId).valueChanges();
+  }
+
+  isStudentEnrolled(courseId: string, studentId: string): Observable<boolean> {
+    return this.getEnrolledStudents(courseId).pipe(
+      map(studentIds => studentIds.includes(studentId))
+    );
+  }
+
+  getEnrolledStudents(courseId: string): Observable<any[]> {
+    return this.db.collection('courses').doc<Course>(courseId).valueChanges().pipe(
+      switchMap(course => {
+        if (!course || !course.enrolledStudents || course.enrolledStudents.length === 0) {
+          return of([]);
+        }
+        const studentObservables = course.enrolledStudents.map(studentId => 
+          this.db.collection('users').doc(studentId).valueChanges()
+        );
+        return forkJoin(studentObservables);
+      })
+    );
+  }
 
   addCourse(courseData: any): Observable<any> {
     return this.authService.getCurrentUserObservable().pipe(
@@ -34,7 +72,7 @@ export class CoursesService {
       const assignmentsRef = this.db.collection('courses').doc(courseId).collection('assignments');
       assignmentsRef.add({
         ...assignmentData,
-        createdOn: new Date()  // Optionally include other metadata like creation date
+        createdOn: new Date() 
       })
       .then(docRef => {
         console.log(`Assignment added with ID: ${docRef.id}`);
@@ -68,7 +106,6 @@ export class CoursesService {
   getAssignmentsForCourse(courseId: string): Observable<any[]> {
     return this.db.collection(`courses/${courseId}/assignments`).valueChanges({ idField: 'id' });
   }
-
 
   enrollStudentInCourse(studentId: string, courseId: string): Promise<void> {
     return this.db.collection('users').doc(studentId)

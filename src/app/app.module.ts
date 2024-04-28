@@ -23,6 +23,7 @@ import { InstructorDashboardComponent } from './instructor components/instructor
 import { InstructorCoursesComponent } from './instructor components/instructor-courses/instructor-courses.component';
 import { AdminDashboardComponent } from './admin components/admin-dashboard/admin-dashboard.component';
 import { AccountsManagementComponent } from './admin components/accounts-management/accounts-management.component';
+import { AdminEnrollmentComponent } from './admin components/admin-enrollment/admin-enrollment.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { AccountsManagementComponent } from './admin components/accounts-managem
     InstructorDashboardComponent,
     InstructorCoursesComponent,
     AdminDashboardComponent,
-    AccountsManagementComponent
+    AccountsManagementComponent,
+    AdminEnrollmentComponent
   ],
   imports: [
     BrowserModule,
