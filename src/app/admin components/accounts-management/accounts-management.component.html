@@ -1,15 +1,16 @@
-<!-- admin-dashboard.component.html
 <h2>User Management Dashboard</h2>
 <table>
   <tr>
     <th>Name</th>
     <th>Email</th>
+    <th>Role</th>
     <th>Status</th>
     <th>Actions</th>
   </tr>
   <tr *ngFor="let user of users">
     <td>{{ user.name }}</td>
     <td>{{ user.email }}</td>
+    <td>{{ user.role }}</td>
     <td>{{ user.status }}</td>
     <td>
       <button (click)="toggleUserStatus(user)">
@@ -18,4 +19,4 @@
       <button (click)="deleteUser(user.uid)">Delete</button>
     </td>
   </tr>
-</table> -->
+</table>

@@ -7,7 +7,7 @@ import { UserManagementService } from '../services/user management service/user-
   styleUrl: './accounts-management.component.css'
 })
 export class AccountsManagementComponent implements OnInit {
-  users!: any[];  // Adjust type as per your model
+  users!: any[]; 
 
   constructor(private userManagementService: UserManagementService) {}
 

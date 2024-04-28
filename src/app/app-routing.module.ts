@@ -12,6 +12,7 @@ import { InstructorDashboardComponent } from './instructor components/instructor
 import { CourseCreationComponent } from './instructor components/course-creation/course-creation.component';
 import { InstructorCoursesComponent } from './instructor components/instructor-courses/instructor-courses.component';
 import { AdminDashboardComponent } from './admin components/admin-dashboard/admin-dashboard.component';
+import { AccountsManagementComponent } from './admin components/accounts-management/accounts-management.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/register', pathMatch: 'full' },
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'course-creation', component:CourseCreationComponent, canActivate: [AuthGuard], data: { expectedRole: 'instructor' } },
   { path: 'my-courses', component:InstructorCoursesComponent, canActivate: [AuthGuard], data: { expectedRole: 'instructor' } },
   { path: 'admin-dashboard', component:AdminDashboardComponent, canActivate: [AuthGuard], data: { expectedRole: 'admin' } },
+  { path: 'accounts', component:AccountsManagementComponent, canActivate: [AuthGuard], data: { expectedRole: 'admin' } },
   { path: '**', redirectTo: '/register' }
 ];
 
