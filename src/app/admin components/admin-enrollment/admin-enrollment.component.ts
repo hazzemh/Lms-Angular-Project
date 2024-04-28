@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { combineLatest, Observable, Subscription, switchMap, map, of } from 'rxjs';
+import { combineLatest, Observable, Subscription, map, of } from 'rxjs';
 import { CoursesService } from '../../student components/services/courses service/courses.service';
 import { UserManagementService } from '../services/user management service/user-management.service';
 
