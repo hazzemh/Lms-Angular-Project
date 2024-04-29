@@ -26,6 +26,7 @@
       Enrollment</a>
     <a *ngIf="(isLoggedIn$ | async) && (userRole$ | async) === 'admin'" routerLink="/course-management">Course
       Management</a>
+    <a *ngIf="(isLoggedIn$ | async) && (userRole$ | async) === 'admin'" routerLink="/archive">Archive</a>
 
     <!-- Links for non-logged-in users -->
     <a *ngIf="!(isLoggedIn$ | async)" routerLink="/register">Register</a>

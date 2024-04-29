@@ -25,6 +25,7 @@ import { AccountsManagementComponent } from './admin components/accounts-managem
 import { AdminEnrollmentComponent } from './admin components/admin-enrollment/admin-enrollment.component';
 import { CompletionStatusComponent } from './student components/completion-status/completion-status.component';
 import { CourseManagementComponent } from './admin components/course-management/course-management.component';
+import { ArchivedCoursesComponent } from './admin components/archived-courses/archived-courses.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { CourseManagementComponent } from './admin components/course-management/
     AccountsManagementComponent,
     AdminEnrollmentComponent,
     CompletionStatusComponent,
-    CourseManagementComponent
+    CourseManagementComponent,
+    ArchivedCoursesComponent
   ],
   imports: [
     BrowserModule,

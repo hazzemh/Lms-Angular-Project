@@ -46,16 +46,16 @@ export class CourseManagementComponent implements OnInit {
       return;
     }
   
-    // Update the course and then close the modal
     this.courseService.updateCourse(course.id, {
       title: course.title,
-      description: course.description,  // Ensure other fields are included if necessary
+      description: course.description, 
       instructorId: course.instructorId
-      // Add more fields as required
     }).then(() => {
       console.log('Course updated successfully:', course.title);
-      this.closeEditModal(); // Close the modal on successful update
+      alert('Course updated successfully');
+      this.closeEditModal();
     }).catch(error => {
+      alert('Failed to update Course!');
       console.error('Failed to update course', error);
     });
   }
@@ -64,7 +64,9 @@ export class CourseManagementComponent implements OnInit {
     if (courseId) {
       this.courseService.archiveCourse(courseId).then(() => {
         console.log('Course archived successfully');
+        alert('Course archived successfully');
       }).catch(error => {
+        alert('Failed to archive course');
         console.error('Failed to archive course', error);
       });
     } else {

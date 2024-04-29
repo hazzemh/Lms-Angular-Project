@@ -1,0 +1,12 @@
+<div>
+    <h1>Archived Courses</h1>
+    <ul>
+        <li *ngFor="let course of archivedCourses$ | async">
+            {{ course.title }} - {{ course.description }}
+            <button (click)="course.id && unarchiveCourse(course.id)">Unarchive</button>
+        </li>
+    </ul>
+    <ng-container *ngIf="(archivedCourses$ | async)?.length === 0">
+        <p>No archived courses available.</p>
+    </ng-container>
+</div>

@@ -15,6 +15,7 @@ import { AccountsManagementComponent } from './admin components/accounts-managem
 import { AdminEnrollmentComponent } from './admin components/admin-enrollment/admin-enrollment.component';
 import { CompletionStatusComponent } from './student components/completion-status/completion-status.component';
 import { CourseManagementComponent } from './admin components/course-management/course-management.component';
+import { ArchivedCoursesComponent } from './admin components/archived-courses/archived-courses.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/register', pathMatch: 'full' },
@@ -31,6 +32,7 @@ const routes: Routes = [
   { path: 'accounts', component: AccountsManagementComponent, canActivate: [AuthGuard], data: { expectedRole: 'admin' } },
   { path: 'course-enrollment', component: AdminEnrollmentComponent, canActivate: [AuthGuard], data: { expectedRole: 'admin' } },
   { path: 'course-management', component: CourseManagementComponent, canActivate: [AuthGuard], data: { expectedRole: 'admin' } },
+  { path: 'archive', component: ArchivedCoursesComponent, canActivate: [AuthGuard], data: { expectedRole: 'admin' } },
   { path: '**', redirectTo: '/register' }
 ];
 
