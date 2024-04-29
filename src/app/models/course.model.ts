@@ -4,6 +4,7 @@ export interface Course {
     description: string;
     instructor: string;
     enrolledStudents: string[];
+    grade?: any
     // Add other fields as needed
   }
   

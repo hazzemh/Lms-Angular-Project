@@ -13,7 +13,6 @@ import { LoginComponent } from './login/login.component';
 import { AssignmentSubmissionComponent } from './student components/assignment-submission/assignment-submission.component';
 import { CourseCardComponent } from './student components/course-card/course-card.component';
 import { CourseMaterialsComponent } from './student components/course-materials/course-materials.component';
-import { ProgressTrackingComponent } from './student components/progress-tracking/progress-tracking.component';
 import { StudentDashboardComponent } from './student components/student-dashboard/student-dashboard.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { AssignmentsComponent } from './student components/assignments/assignments.component';
@@ -24,6 +23,7 @@ import { InstructorCoursesComponent } from './instructor components/instructor-c
 import { AdminDashboardComponent } from './admin components/admin-dashboard/admin-dashboard.component';
 import { AccountsManagementComponent } from './admin components/accounts-management/accounts-management.component';
 import { AdminEnrollmentComponent } from './admin components/admin-enrollment/admin-enrollment.component';
+import { CompletionStatusComponent } from './student components/completion-status/completion-status.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +32,6 @@ import { AdminEnrollmentComponent } from './admin components/admin-enrollment/ad
     LoginComponent,
     CourseMaterialsComponent,
     AssignmentSubmissionComponent,
-    ProgressTrackingComponent,
     StudentDashboardComponent,
     CourseCardComponent,
     NavbarComponent,
@@ -42,7 +41,8 @@ import { AdminEnrollmentComponent } from './admin components/admin-enrollment/ad
     InstructorCoursesComponent,
     AdminDashboardComponent,
     AccountsManagementComponent,
-    AdminEnrollmentComponent
+    AdminEnrollmentComponent,
+    CompletionStatusComponent
   ],
   imports: [
     BrowserModule,

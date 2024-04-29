@@ -1,0 +1,13 @@
+<div *ngIf="courses.length > 0; else noData">
+    <div *ngFor="let course of courses; let i = index">
+      <div class="course-container">
+        <h3>{{ i + 1 }}. {{ course.title }}</h3>
+        <div class="progress-bar" [style.width]="course.progress + '%'"></div>
+        <span>{{ course.progress }}%</span>
+        <input type="checkbox" [checked]="course.completed" disabled> Completed
+        <p>Grade: {{ course.grade || 'N/A' }}</p>
+      </div>
+    </div>
+  </div>
+  <ng-template #noData><p>No course data available.</p></ng-template>
+  

@@ -4,7 +4,6 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { AssignmentSubmissionComponent } from './student components/assignment-submission/assignment-submission.component';
 import { CourseMaterialsComponent } from './student components/course-materials/course-materials.component';
-import { ProgressTrackingComponent } from './student components/progress-tracking/progress-tracking.component';
 import { StudentDashboardComponent } from './student components/student-dashboard/student-dashboard.component';
 import { AuthGuard } from '../auth.guard';
 import { AssignmentsComponent } from './student components/assignments/assignments.component';
@@ -14,6 +13,7 @@ import { InstructorCoursesComponent } from './instructor components/instructor-c
 import { AdminDashboardComponent } from './admin components/admin-dashboard/admin-dashboard.component';
 import { AccountsManagementComponent } from './admin components/accounts-management/accounts-management.component';
 import { AdminEnrollmentComponent } from './admin components/admin-enrollment/admin-enrollment.component';
+import { CompletionStatusComponent } from './student components/completion-status/completion-status.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/register', pathMatch: 'full' },
@@ -21,7 +21,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'courses', component: CourseMaterialsComponent, canActivate: [AuthGuard], data: { expectedRole: 'student' } },
   { path: 'assignments', component: AssignmentsComponent, canActivate: [AuthGuard], data: { expectedRole: 'student' } },
-  { path: 'track-progress', component: ProgressTrackingComponent, canActivate: [AuthGuard], data: { expectedRole: 'student' } },
+  { path: 'completion-status', component: CompletionStatusComponent, canActivate: [AuthGuard], data: { expectedRole: 'student' } },
   { path: 'student-dashboard', component: StudentDashboardComponent, canActivate: [AuthGuard], data: { expectedRole: 'student' } },
   { path: 'instructor-dashboard', component: InstructorDashboardComponent, canActivate: [AuthGuard], data: { expectedRole: 'instructor' } },
   { path: 'course-creation', component: CourseCreationComponent, canActivate: [AuthGuard], data: { expectedRole: 'instructor' } },

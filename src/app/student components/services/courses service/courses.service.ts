@@ -2,15 +2,80 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs/internal/Observable';
 import { AuthService } from '../../../authentication service/auth.service';
-import { switchMap, of, combineLatest, map, catchError, first, throwError, forkJoin } from 'rxjs';
+import { switchMap, of, combineLatest, map, catchError, first, throwError, forkJoin, tap, from } from 'rxjs';
 import { Course } from '../../../models/course.model';
 import firebase from 'firebase/compat/app';
+import { CourseProgress } from '../../../models/courseProgress.model';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class CoursesService {
   constructor(private db: AngularFirestore, private authService: AuthService) { }
+
+  getProgressWithCourseDetails(studentId: string): Observable<CourseProgress[]> {
+    return this.db.collection('progress').doc(studentId).collection<CourseProgress>('courses').snapshotChanges().pipe(
+      switchMap(actions => {
+        if (actions.length === 0) {
+          console.log('No course progress found.');
+          return of([]);
+        }
+        return forkJoin(actions.map(action => {
+          const progressData = action.payload.doc.data() as CourseProgress;
+          const courseId = action.payload.doc.id;
+          return this.db.collection('courses').doc<CourseProgress>(courseId).valueChanges().pipe(
+            map(courseDetails => {
+              if (courseDetails) {
+                return {
+                  ...progressData,
+                  id: courseId,
+                  title: courseDetails.title || 'No title'
+                };
+              }
+              return { ...progressData, id: courseId, title: 'No title' };
+            })
+          );
+        }));
+      }),
+      map(courses => courses), // Ensure we're passing an array
+      catchError(error => {
+        console.error("Error fetching combined course progress:", error);
+        return throwError(() => new Error("Failed to fetch combined course progress data"));
+      })
+    );
+  }
+  // getProgressWithCourseDetails(studentId: string): Observable<CourseProgress[]> {
+  //   console.log('Fetching progress for student ID:', studentId);
+  //   return this.db.collection('progress').doc(studentId)
+  //     .collection<CourseProgress>('courses').snapshotChanges().pipe(
+  //       switchMap(actions => {
+  //         if (actions.length === 0) {
+  //           console.log('No course progress found.');
+  //           return of([]); // Return an empty observable array if no actions
+  //         }
+  //         return forkJoin(actions.map(a => {
+  //           const progressData = a.payload.doc.data() as CourseProgress;
+  //           const courseId = a.payload.doc.id;
+  //           return this.db.collection('courses').doc<Course>(courseId).valueChanges().pipe(
+  //             map(courseDetails => ({
+  //               ...progressData,
+  //               id: courseId,
+  //               title: courseDetails ? courseDetails.title : 'No title'
+  //             })),
+  //             tap(finalData => console.log('Mapped Data:', finalData)) // Log the final data after mapping
+  //           );
+  //         }));
+  //       }),
+  //       tap(finalData => console.log('Final emitted data:', finalData)), // Debugging line to see what is emitted
+  //       catchError(error => {
+  //         console.error("Error fetching combined course progress:", error);
+  //         return throwError(() => new Error("Failed to fetch combined course progress data"));
+  //       })
+  //     );
+  // }
+
+
 
 
   addStudentToCourse(courseId: string, studentId: string): Promise<void> {
@@ -41,7 +106,7 @@ export class CoursesService {
         if (!course || !course.enrolledStudents || course.enrolledStudents.length === 0) {
           return of([]);
         }
-        const studentObservables = course.enrolledStudents.map(studentId => 
+        const studentObservables = course.enrolledStudents.map(studentId =>
           this.db.collection('users').doc(studentId).valueChanges()
         );
         return forkJoin(studentObservables);
@@ -72,21 +137,21 @@ export class CoursesService {
       const assignmentsRef = this.db.collection('courses').doc(courseId).collection('assignments');
       assignmentsRef.add({
         ...assignmentData,
-        createdOn: new Date() 
+        createdOn: new Date()
       })
-      .then(docRef => {
-        console.log(`Assignment added with ID: ${docRef.id}`);
-        resolve();
-      })
-      .catch(error => {
-        console.error('Error adding assignment:', error);
-        reject(error);
-      });
+        .then(docRef => {
+          console.log(`Assignment added with ID: ${docRef.id}`);
+          resolve();
+        })
+        .catch(error => {
+          console.error('Error adding assignment:', error);
+          reject(error);
+        });
     });
   }
-  
+
   getMyCourses(instructorId: string): Observable<Course[]> {
-    return this.db.collection<Course>('courses', ref => 
+    return this.db.collection<Course>('courses', ref =>
       ref.where('instructorId', '==', instructorId))
       .valueChanges({ idField: 'id' });
   }
@@ -118,7 +183,7 @@ export class CoursesService {
     return this.db.collection(`users/${userId}/enrolledCourses`).snapshotChanges().pipe(
       switchMap(enrollments => {
         if (enrollments.length > 0) {
-          const courseObservables = enrollments.map(enrollment => 
+          const courseObservables = enrollments.map(enrollment =>
             this.getCourseDetails(enrollment.payload.doc.id));
           return combineLatest(courseObservables);
         } else {
