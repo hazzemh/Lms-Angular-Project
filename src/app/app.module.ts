@@ -24,6 +24,7 @@ import { AdminDashboardComponent } from './admin components/admin-dashboard/admi
 import { AccountsManagementComponent } from './admin components/accounts-management/accounts-management.component';
 import { AdminEnrollmentComponent } from './admin components/admin-enrollment/admin-enrollment.component';
 import { CompletionStatusComponent } from './student components/completion-status/completion-status.component';
+import { CourseManagementComponent } from './admin components/course-management/course-management.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { CompletionStatusComponent } from './student components/completion-statu
     AdminDashboardComponent,
     AccountsManagementComponent,
     AdminEnrollmentComponent,
-    CompletionStatusComponent
+    CompletionStatusComponent,
+    CourseManagementComponent
   ],
   imports: [
     BrowserModule,

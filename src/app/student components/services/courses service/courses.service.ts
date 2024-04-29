@@ -47,38 +47,14 @@
           })
         );
     }
-  // getProgressWithCourseDetails(studentId: string): Observable<CourseProgress[]> {
-  //   console.log('Fetching progress for student ID:', studentId);
-  //   return this.db.collection('progress').doc(studentId)
-  //     .collection<CourseProgress>('courses').snapshotChanges().pipe(
-  //       switchMap(actions => {
-  //         if (actions.length === 0) {
-  //           console.log('No course progress found.');
-  //           return of([]); // Return an empty observable array if no actions
-  //         }
-  //         return forkJoin(actions.map(a => {
-  //           const progressData = a.payload.doc.data() as CourseProgress;
-  //           const courseId = a.payload.doc.id;
-  //           return this.db.collection('courses').doc<Course>(courseId).valueChanges().pipe(
-  //             map(courseDetails => ({
-  //               ...progressData,
-  //               id: courseId,
-  //               title: courseDetails ? courseDetails.title : 'No title'
-  //             })),
-  //             tap(finalData => console.log('Mapped Data:', finalData)) // Log the final data after mapping
-  //           );
-  //         }));
-  //       }),
-  //       tap(finalData => console.log('Final emitted data:', finalData)), // Debugging line to see what is emitted
-  //       catchError(error => {
-  //         console.error("Error fetching combined course progress:", error);
-  //         return throwError(() => new Error("Failed to fetch combined course progress data"));
-  //       })
-  //     );
-  // }
 
-
-
+    updateCourse(id: string, course: Partial<Course>): Promise<void> {
+      return this.db.collection('courses').doc(id).update(course);
+    }
+  
+    archiveCourse(id: string): Promise<void> {
+      return this.updateCourse(id, { isActive: false });
+    }
 
   addStudentToCourse(courseId: string, studentId: string): Promise<void> {
     return this.db.collection('courses').doc(courseId).update({
@@ -159,7 +135,7 @@
   }
 
   getAllCourses(): Observable<any[]> {
-    return this.db.collection('courses').valueChanges({ idField: 'id' });
+    return this.db.collection<Course>('courses', ref => ref.where('isActive', '==', true)).valueChanges({ idField: 'id' });
   }
 
   getCourseDetails(courseId: string) {

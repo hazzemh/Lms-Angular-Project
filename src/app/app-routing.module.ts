@@ -14,6 +14,7 @@ import { AdminDashboardComponent } from './admin components/admin-dashboard/admi
 import { AccountsManagementComponent } from './admin components/accounts-management/accounts-management.component';
 import { AdminEnrollmentComponent } from './admin components/admin-enrollment/admin-enrollment.component';
 import { CompletionStatusComponent } from './student components/completion-status/completion-status.component';
+import { CourseManagementComponent } from './admin components/course-management/course-management.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/register', pathMatch: 'full' },
@@ -29,6 +30,7 @@ const routes: Routes = [
   { path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [AuthGuard], data: { expectedRole: 'admin' } },
   { path: 'accounts', component: AccountsManagementComponent, canActivate: [AuthGuard], data: { expectedRole: 'admin' } },
   { path: 'course-enrollment', component: AdminEnrollmentComponent, canActivate: [AuthGuard], data: { expectedRole: 'admin' } },
+  { path: 'course-management', component: CourseManagementComponent, canActivate: [AuthGuard], data: { expectedRole: 'admin' } },
   { path: '**', redirectTo: '/register' }
 ];
 
