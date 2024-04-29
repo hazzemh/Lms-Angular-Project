@@ -1,29 +1,75 @@
-/* completion-status.component.css */
+/* General container styles */
 .course-container {
-  border: 1px solid #ccc;
-  padding: 10px;
+  border: 1px solid #e0e0e0;
+  background-color: #f9f9f9;
+  padding: 20px;
   margin-bottom: 20px;
-  border-radius: 5px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
 }
 
+/* Hover effect for course containers */
+.course-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Title styling */
+h3 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Progress bar container */
 .progress-container {
   background-color: #e0e0e0;
   border-radius: 5px;
-  width: 100%;
+  overflow: hidden; /* Ensures inner elements don't overflow */
+  position: relative;
   height: 20px;
+  margin-bottom: 10px;
 }
 
+/* Animated progress bar */
 .progress-bar {
   background-color: #4CAF50;
   height: 100%;
-  width: 0; /* Initial width */
+  width: 0; /* Initial width for animation start */
   border-radius: 5px;
+  transition: width 1s ease-in-out;
 }
 
+/* Progress text styling */
+.progress-text {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  color: white;
+  line-height: 20px; /* Same as progress-container height */
+  font-weight: bold;
+}
+
+/* Checkbox and grade label styling */
 label {
-  margin-left: 10px;
+  font-weight: bold;
+  color: #666;
+  user-select: none; /* Prevent text selection */
 }
 
-input[type="checkbox"] {
-  margin-right: 5px;
+/* Grade display */
+.grade-display {
+  background-color: #f0f0f0;
+  padding: 5px 10px;
+  border-radius: 5px;
+  float: right; /* Align grade to the right */
+  font-weight: bold;
+  color: #555;
+}
+
+/* Cleanup floats */
+.course-container::after {
+  content: "";
+  display: table;
+  clear: both;
 }

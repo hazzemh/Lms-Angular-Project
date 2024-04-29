@@ -1,50 +1,52 @@
-import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Observable } from 'rxjs/internal/Observable';
-import { AuthService } from '../../../authentication service/auth.service';
-import { switchMap, of, combineLatest, map, catchError, first, throwError, forkJoin, tap, from } from 'rxjs';
-import { Course } from '../../../models/course.model';
-import firebase from 'firebase/compat/app';
-import { CourseProgress } from '../../../models/courseProgress.model';
+  import { Injectable } from '@angular/core';
+  import { AngularFirestore } from '@angular/fire/compat/firestore';
+  import { Observable } from 'rxjs/internal/Observable';
+  import { AuthService } from '../../../authentication service/auth.service';
+  import { switchMap, of, combineLatest, map, catchError, first, throwError, forkJoin, tap, from } from 'rxjs';
+  import { Course } from '../../../models/course.model';
+  import firebase from 'firebase/compat/app';
+  import { CourseProgress } from '../../../models/courseProgress.model';
 
 
-@Injectable({
-  providedIn: 'root'
-})
-export class CoursesService {
-  constructor(private db: AngularFirestore, private authService: AuthService) { }
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class CoursesService {
+    constructor(private db: AngularFirestore, private authService: AuthService) { }
 
-  getProgressWithCourseDetails(studentId: string): Observable<CourseProgress[]> {
-    return this.db.collection('progress').doc(studentId).collection<CourseProgress>('courses').snapshotChanges().pipe(
-      switchMap(actions => {
-        if (actions.length === 0) {
-          console.log('No course progress found.');
-          return of([]);
-        }
-        return forkJoin(actions.map(action => {
-          const progressData = action.payload.doc.data() as CourseProgress;
-          const courseId = action.payload.doc.id;
-          return this.db.collection('courses').doc<CourseProgress>(courseId).valueChanges().pipe(
-            map(courseDetails => {
-              if (courseDetails) {
-                return {
-                  ...progressData,
-                  id: courseId,
-                  title: courseDetails.title || 'No title'
-                };
-              }
-              return { ...progressData, id: courseId, title: 'No title' };
-            })
-          );
-        }));
-      }),
-      map(courses => courses), // Ensure we're passing an array
-      catchError(error => {
-        console.error("Error fetching combined course progress:", error);
-        return throwError(() => new Error("Failed to fetch combined course progress data"));
-      })
-    );
-  }
+    getProgressWithCourseDetails(studentId: string): Observable<CourseProgress[]> {
+      return this.db.collection('progress').doc(studentId)
+        .collection<CourseProgress>('courses').snapshotChanges().pipe(
+          tap(actions => console.log('Snapshot actions:', actions)),
+          switchMap(actions => {
+            if (actions.length === 0) {
+              console.log('No course progress found.');
+              return of([]);
+            }
+            return forkJoin(
+              actions.map(action => {
+                const progressData = action.payload.doc.data() as CourseProgress;
+                const courseId = action.payload.doc.id;
+                return this.db.collection<Course>('courses').doc<Course>(courseId).valueChanges().pipe(
+                  map(courseDetails => ({
+                    ...progressData,
+                    id: courseId,
+                    title: courseDetails ? courseDetails.title : 'No title',
+                    description: courseDetails?.description,
+                    instructor: courseDetails?.instructor,
+                    enrolledStudents: courseDetails?.enrolledStudents
+                  })),
+                  tap(details => console.log(`Details fetched for course ID: ${courseId}`, details))
+                );
+              })
+            );
+          }),
+          catchError(error => {
+            console.error("Error fetching combined course progress:", error);
+            return throwError(() => new Error("Failed to fetch combined course progress data"));
+          })
+        );
+    }
   // getProgressWithCourseDetails(studentId: string): Observable<CourseProgress[]> {
   //   console.log('Fetching progress for student ID:', studentId);
   //   return this.db.collection('progress').doc(studentId)

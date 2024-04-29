@@ -10,62 +10,50 @@ import { CourseProgress } from '../../models/courseProgress.model';
   styleUrl: './completion-status.component.css'
 })
 export class CompletionStatusComponent implements OnInit {
-  courses: CourseProgress[] = [];
-  userId: string | null = null;
+  courses: CourseProgress[] = [
+    {
+      id: 'course1',
+      title: 'Introduction to Angular',
+      progress: 85,
+      completed: true,
+      grade: 'A'
+    },
+    {
+      id: 'course2',
+      title: 'Advanced JavaScript',
+      progress: 70,
+      completed: false,
+      grade: 'B'
+    },
+    {
+      id: 'course3',
+      title: 'Web Development Fundamentals',
+      progress: 95,
+      completed: true,
+      grade: 'A+'
+    }
+  ];
+  constructor(
+    private courseService: CoursesService,
+    private authService: AuthService
+  ) {}
 
-  constructor(private courseService: CoursesService, private authService: AuthService) { }
-
-  ngOnInit() {
-    this.authService.getCurrentStudentObservable().subscribe({
-      next: uid => {
-        this.userId = uid;
-        if (this.userId) {
-          this.courseService.getProgressWithCourseDetails(this.userId).subscribe({
-            next: (courses) => {
-              this.courses = courses;
-              console.log("Courses updated:", this.courses);  // Verify data is received
-            },
-            error: (error) => console.error('Error fetching courses:', error)
-          });
-        }
-      },
-      error: error => console.error('Error fetching user ID:', error)
-    });
-  
+  ngOnInit(): void {
+    // this.authService.getCurrentStudentObservable().subscribe({
+    //   next: uid => {
+    //     if (uid) {
+    //       console.log("User ID is available:", uid);
+    //       this.courses$ = this.courseService.getProgressWithCourseDetails(uid);
+    //       this.courses$.subscribe(courses => {
+    //         console.log("Courses loaded:", courses);
+    //       });
+    //     } else {
+    //       console.error("No user ID found");
+    //     }
+    //   },
+    //   error: error => console.error('Error fetching user ID:', error)
+    // });
   }
-
 }
-
-
-
-// getProgress(courseId: string | undefined): number {
-//   if (!courseId) {
-//     console.log("No course ID provided for progress.");
-//     return 0; // Return default progress if no ID
-//   }
-//   const courseProgress = this.progressMap[courseId];
-//   console.log(`Getting progress for ${courseId}:`, courseProgress?.progress);
-//   return courseProgress?.progress ?? 0;
-// }
-
-// isCompleted(courseId: string | undefined): boolean {
-//   if (!courseId) {
-//     console.log("No course ID provided for completion status.");
-//     return false; // Return default completion status if no ID
-//   }
-//   const courseProgress = this.progressMap[courseId];
-//   console.log(`Completion status for ${courseId}:`, courseProgress?.completed);
-//   return courseProgress?.completed ?? false;
-// }
-
-// getGrade(courseId: string | undefined): string {
-//   if (!courseId) {
-//     console.log("No course ID provided for grade.");
-//     return "N/A"; // Return default grade if no ID
-//   }
-//   const courseProgress = this.progressMap[courseId];
-//   console.log(`Grade for ${courseId}:`, courseProgress?.grade);
-//   return courseProgress?.grade ?? "N/A";
-// }
 
 
