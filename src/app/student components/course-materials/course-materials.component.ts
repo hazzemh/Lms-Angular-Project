@@ -20,6 +20,7 @@ export class CourseMaterialsComponent implements OnInit {
       this.userId = uid;
       if (this.userId) {
         this.courses$ = this.coursesService.getAssignedCourses(this.userId);
+        console.log('course materials : ', this.courses$);
       }
     });
   }
