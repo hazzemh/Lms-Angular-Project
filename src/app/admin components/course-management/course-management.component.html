@@ -11,20 +11,21 @@
     </ul>
 
     <!-- Edit Course Modal -->
-    <div class="modal" [ngStyle]="{ 'display': isEditModalOpen ? 'block' : 'none' }">
-        <div class="modal-content">
-            <h2>Edit Course</h2>
-            <form *ngIf="selectedCourse">
-                <label>Title:</label>
-                <input type="text" [(ngModel)]="selectedCourse.title" name="title">
-                <label>Description:</label>
-                <textarea [(ngModel)]="selectedCourse.description" name="description"></textarea>
-                <label>Instructor ID:</label>
-                <input type="text" [(ngModel)]="selectedCourse.instructorId" name="instructorId">
-                <!-- Include other fields as necessary -->
-                <button type="button" (click)="updateCourse(selectedCourse)">Save Changes</button>
-                <button type="button" (click)="closeEditModal()">Close</button>
-            </form>
-        </div>
+    <!-- Edit Course Modal -->
+<div class="modal" [class.show]="isEditModalOpen">
+    <div class="modal-content">
+        <h2>Edit Course</h2>
+        <form *ngIf="selectedCourse">
+            <label>Title:</label>
+            <input type="text" [(ngModel)]="selectedCourse.title" name="title">
+            <label>Description:</label>
+            <textarea [(ngModel)]="selectedCourse.description" name="description"></textarea>
+            <label>Instructor ID:</label>
+            <input type="text" [(ngModel)]="selectedCourse.instructorId" name="instructorId">
+            <button class="save" type="button" (click)="updateCourse(selectedCourse)">Save Changes</button>
+        </form>
+        <button class="close" type="button" (click)="closeEditModal()">X</button>
     </div>
+</div>
+
 </div>
