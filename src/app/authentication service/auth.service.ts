@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
-import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
+import { BehaviorSubject, catchError, EMPTY, map, Observable, of, switchMap, tap } from 'rxjs';
 import { User } from '@angular/fire/auth';
 import firebase from 'firebase/compat/app';
+import { UserDocument } from '../models/userDoc.model';
 
 
 interface UserData {
@@ -29,15 +30,34 @@ export class AuthService {
   }
 
   private monitorAuthState(): void {
-    this.afAuth.authState.subscribe(user => {
-      if (user) {
-        this.isUserLoggedIn.next(true);
-        this.fetchUserRole(user.uid);
-      } else {
-        this.isUserLoggedIn.next(false);
-        this.userRole.next('');
-      }
-    });
+    this.afAuth.authState.pipe(
+      switchMap(user => {
+        if (user) {
+          return this.fetchCurrentUserRole(user.uid).pipe(
+            tap(userRole => {
+              this.userRole.next(userRole);
+              this.isUserLoggedIn.next(true);
+            })
+          );
+        } else {
+          this.isUserLoggedIn.next(false);
+          this.userRole.next('');
+          return EMPTY;
+        }
+      })
+    ).subscribe();
+  }
+
+  fetchCurrentUserRole(uid: string): Observable<string> {
+    return this.firestore.collection<UserDocument>('users').doc<UserDocument>(uid).valueChanges().pipe(
+      map(userDoc => {
+        if (userDoc) {
+          return userDoc.role;
+        } else {
+          throw new Error('User document does not exist');
+        }
+      })
+    );
   }
 
   private fetchUserRole(userId: string): void {

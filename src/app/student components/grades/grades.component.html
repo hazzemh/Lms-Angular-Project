@@ -1,0 +1,15 @@
+
+<div class="grades-container">
+    <h2>Course Grades</h2>
+    <div *ngFor="let grade of grades" class="grade-card">
+      <h3>{{ grade.courseTitle }}</h3>
+      <ul>
+        <li>Practical: {{ grade.practical }} / 20</li>
+        <li>Year Work: {{ grade.yearWork }} / 10</li>
+        <li>Midterm: {{ grade.midterm }} / 15</li>
+        <li>Quizzes: {{ grade.quizzes }} / 5</li>
+        <li>Final Exam: {{ grade.finalExam }} / 50</li>
+      </ul>
+    </div>
+  </div>
+  

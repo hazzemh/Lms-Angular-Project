@@ -28,6 +28,7 @@ import { CourseManagementComponent } from './admin components/course-management/
 import { ArchivedCoursesComponent } from './admin components/archived-courses/archived-courses.component';
 import { InstructorGradeSubmissionsComponent } from './instructor components/instructor-grade-submissions/instructor-grade-submissions.component';
 import { CourseLecturesComponent } from './student components/course-lectures/course-lectures.component';
+import { GradesComponent } from './student components/grades/grades.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { CourseLecturesComponent } from './student components/course-lectures/co
     CourseManagementComponent,
     ArchivedCoursesComponent,
     InstructorGradeSubmissionsComponent,
-    CourseLecturesComponent
+    CourseLecturesComponent,
+    GradesComponent
   ],
   imports: [
     BrowserModule,

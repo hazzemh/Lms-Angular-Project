@@ -191,7 +191,9 @@ export class CoursesService {
   }
 
   getAssignedCourses(userId: string): Observable<Course[]> {
-    return this.db.collection<Course>('courses', ref => ref.where('enrolledStudents', 'array-contains', userId))
+    return this.db.collection<Course>('courses', ref => 
+      ref.where('enrolledStudents', 'array-contains', userId)
+         .where('isActive', '==', true))
       .snapshotChanges()
       .pipe(
         map(actions => actions.map(a => {
