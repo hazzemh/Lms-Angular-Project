@@ -3,8 +3,10 @@
     <ul>
         <li *ngFor="let course of courses">
             {{ course.title }} - {{ course.description }}
-            <button (click)="openEditModal(course)">Edit</button>
-            <button (click)="archiveCourse(course.id)" [disabled]="!course.id">Archive</button>
+            <div class="button-row">
+            <button class="edit"(click)="openEditModal(course)">Edit</button>
+            <button class="archive"(click)="archiveCourse(course.id)" [disabled]="!course.id">Archive</button>
+        </div>
         </li>
     </ul>
 

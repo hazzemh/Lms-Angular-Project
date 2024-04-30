@@ -26,6 +26,7 @@ import { AdminEnrollmentComponent } from './admin components/admin-enrollment/ad
 import { CompletionStatusComponent } from './student components/completion-status/completion-status.component';
 import { CourseManagementComponent } from './admin components/course-management/course-management.component';
 import { ArchivedCoursesComponent } from './admin components/archived-courses/archived-courses.component';
+import { InstructorGradeSubmissionsComponent } from './instructor components/instructor-grade-submissions/instructor-grade-submissions.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { ArchivedCoursesComponent } from './admin components/archived-courses/ar
     AdminEnrollmentComponent,
     CompletionStatusComponent,
     CourseManagementComponent,
-    ArchivedCoursesComponent
+    ArchivedCoursesComponent,
+    InstructorGradeSubmissionsComponent
   ],
   imports: [
     BrowserModule,

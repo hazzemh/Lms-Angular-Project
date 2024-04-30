@@ -16,6 +16,7 @@ import { AdminEnrollmentComponent } from './admin components/admin-enrollment/ad
 import { CompletionStatusComponent } from './student components/completion-status/completion-status.component';
 import { CourseManagementComponent } from './admin components/course-management/course-management.component';
 import { ArchivedCoursesComponent } from './admin components/archived-courses/archived-courses.component';
+import { InstructorGradeSubmissionsComponent } from './instructor components/instructor-grade-submissions/instructor-grade-submissions.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/register', pathMatch: 'full' },
@@ -28,6 +29,7 @@ const routes: Routes = [
   { path: 'instructor-dashboard', component: InstructorDashboardComponent, canActivate: [AuthGuard], data: { expectedRole: 'instructor' } },
   { path: 'course-creation', component: CourseCreationComponent, canActivate: [AuthGuard], data: { expectedRole: 'instructor' } },
   { path: 'my-courses', component: InstructorCoursesComponent, canActivate: [AuthGuard], data: { expectedRole: 'instructor' } },
+  { path: 'grade-students', component: InstructorGradeSubmissionsComponent, canActivate: [AuthGuard], data: { expectedRole: 'instructor' } },
   { path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [AuthGuard], data: { expectedRole: 'admin' } },
   { path: 'accounts', component: AccountsManagementComponent, canActivate: [AuthGuard], data: { expectedRole: 'admin' } },
   { path: 'course-enrollment', component: AdminEnrollmentComponent, canActivate: [AuthGuard], data: { expectedRole: 'admin' } },

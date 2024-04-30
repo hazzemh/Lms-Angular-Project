@@ -10,6 +10,7 @@
     <a *ngIf="(isLoggedIn$ | async) && (userRole$ | async) === 'instructor'" routerLink="/course-creation">Add
       Course</a>
     <a *ngIf="(isLoggedIn$ | async) && (userRole$ | async) === 'instructor'" routerLink="/my-courses">My Courses</a>
+    <a *ngIf="(isLoggedIn$ | async) && (userRole$ | async) === 'instructor'" routerLink="/grade-students">Grade Students</a>
 
     <!-- Student-specific links -->
     <a *ngIf="(isLoggedIn$ | async) && (userRole$ | async) === 'student'" routerLink="/student-dashboard">Home</a>
