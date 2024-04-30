@@ -2,12 +2,35 @@ ul {
     list-style: none;
     padding: 0;
   }
-  
-  li {
-    margin-bottom: 10px;
-    background-color: #f4f4f4;
-    padding: 10px;
+  h1 {
+    color: #333;
+    padding: 10px 40px;
     border-radius: 5px;
+    position: relative;
+    font-size: 20px;
+}
+
+h1::after {
+    content: '';
+    display: block;
+    width: 3%; /* Short underline width */
+    height: 2px;
+    background-color: #1593C9;
+    position: absolute;
+    left: 4.5%;
+    bottom: 0;
+    transform: translateX(-50%);
+}
+  li {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    justify-content: space-between; /* Ensures content and buttons are spaced apart */
+    align-items: center;
   }
   
   button {
