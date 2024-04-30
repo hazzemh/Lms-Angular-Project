@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { combineLatest, map, Observable, switchMap } from 'rxjs';
 import { Submission } from '../../models/submission.model';
 import { SubmissionsService } from '../services/submission service/submissions.service';
+import { EnrichedSubmission } from '../../models/enrichedSubmission.model';
 
 @Component({
   selector: 'app-instructor-grade-submissions',
@@ -9,12 +10,27 @@ import { SubmissionsService } from '../services/submission service/submissions.s
   styleUrl: './instructor-grade-submissions.component.css'
 })
 export class InstructorGradeSubmissionsComponent implements OnInit {
-  submissions$!: Observable<Submission[]>;
+  enrichedSubmissions$!: Observable<EnrichedSubmission[]>;
 
   constructor(private submissionsService: SubmissionsService) {}
 
   ngOnInit(): void {
-    this.submissions$ = this.submissionsService.getSubmissions();
+    this.enrichedSubmissions$ = this.submissionsService.getSubmissions().pipe(
+      switchMap(submissions => combineLatest(
+        submissions.map(submission => 
+          combineLatest([
+            this.submissionsService.getStudentName(submission.studentId),
+            this.submissionsService.getAssignmentTitle(submission.courseId , submission.assignmentId)
+          ]).pipe(
+            map(([user, assignment]) => ({
+              submission: submission,
+              user: user, 
+              assignment: assignment
+            }))
+          )
+        )
+      ))
+    );
   }
 
   saveGrade(submission: Submission, grade: string | undefined, feedback: string | undefined): void {

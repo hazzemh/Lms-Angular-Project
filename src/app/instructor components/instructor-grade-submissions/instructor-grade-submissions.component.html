@@ -1,20 +1,23 @@
-<!-- admin-grade-submissions.component.html -->
+<!-- instructor-grade-submissions.component.html -->
 <div>
-    <h1>Grade Student Submissions</h1>
-    <ul *ngIf="submissions$ | async as submissions; else loading">
-      <li *ngFor="let submission of submissions">
-        <p>Submission by {{ submission.studentId }} for assignment {{ submission.assignmentId }}</p>
-        <p>Submitted on: {{ submission.submissionDate | date }}</p>
-        <img [src]="submission.fileUrl" alt="Submission file" style="max-width: 200px;">
-        <div>
-          <label for="grade">Grade:</label>
-          <input type="text" id="grade" [(ngModel)]="submission.grade">
-          <label for="feedback">Feedback:</label>
-          <textarea id="feedback" [(ngModel)]="submission.feedback"></textarea>
-          <button (click)="saveGrade(submission, submission.grade ?? '', submission.feedback ?? '')">Save Grade</button>
-        </div>
-      </li>
-    </ul>
-    <ng-template #loading><p>Loading submissions...</p></ng-template>
-  </div>
-  
+  <h1>Grade Student Submissions</h1>
+  <ul *ngIf="enrichedSubmissions$ | async as enrichedSubmissions; else loading">
+    <li *ngFor="let enriched of enrichedSubmissions">
+      <p>Submission by {{ enriched.user.name }} for assignment {{ enriched.assignment.title }}</p>
+      <p>Submitted on: {{ enriched.submission.submissionDate | date:'fullDate' }}</p>
+      <img [src]="enriched.submission.fileUrl" alt="Submission file" style="max-width: 200px;">
+      <div>
+        <label for="grade">Grade:</label>
+        <input type="text" id="grade" [(ngModel)]="enriched.submission.grade">
+        <label for="feedback">Feedback:</label>
+        <textarea id="feedback" [(ngModel)]="enriched.submission.feedback"></textarea>
+        <button
+          (click)="saveGrade(enriched.submission, enriched.submission.grade ?? '', enriched.submission.feedback ?? '')">Save
+          Grade</button>
+      </div>
+    </li>
+  </ul>
+  <ng-template #loading>
+    <p>Loading submissions...</p>
+  </ng-template>
+</div>
