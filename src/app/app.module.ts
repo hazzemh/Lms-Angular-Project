@@ -27,6 +27,7 @@ import { CompletionStatusComponent } from './student components/completion-statu
 import { CourseManagementComponent } from './admin components/course-management/course-management.component';
 import { ArchivedCoursesComponent } from './admin components/archived-courses/archived-courses.component';
 import { InstructorGradeSubmissionsComponent } from './instructor components/instructor-grade-submissions/instructor-grade-submissions.component';
+import { CourseLecturesComponent } from './student components/course-lectures/course-lectures.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { InstructorGradeSubmissionsComponent } from './instructor components/ins
     CompletionStatusComponent,
     CourseManagementComponent,
     ArchivedCoursesComponent,
-    InstructorGradeSubmissionsComponent
+    InstructorGradeSubmissionsComponent,
+    CourseLecturesComponent
   ],
   imports: [
     BrowserModule,

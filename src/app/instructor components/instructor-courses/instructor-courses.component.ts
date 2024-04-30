@@ -10,6 +10,7 @@ import { CoursesService } from '../../student components/services/courses servic
   styleUrl: './instructor-courses.component.css'
 })
 export class InstructorCoursesComponent {
+  isAddLectureDialogOpen = false;
   isAddAssignmentDialogOpen = false;
   selectedCourseId: string | null = null;
   myCourses$!: Observable<Course[]>;
@@ -24,6 +25,15 @@ export class InstructorCoursesComponent {
     });
   }
 
+  openAddLectureDialog(courseId: string) {
+    this.selectedCourseId = courseId;
+    this.isAddLectureDialogOpen = true;
+  }
+
+  closeAddLectureDialog() {
+    this.isAddLectureDialogOpen = false;
+  }
+
   openAddAssignmentDialog(courseId: string): void {
     this.selectedCourseId = courseId;
     this.isAddAssignmentDialogOpen = true;
@@ -32,6 +42,18 @@ export class InstructorCoursesComponent {
   closeAddAssignmentDialog(): void {
     this.isAddAssignmentDialogOpen = false;
     this.selectedCourseId = null;
+  }
+
+  submitLecture(lectureData: any) {
+    if (this.selectedCourseId) {
+      this.coursesService.addLecture(this.selectedCourseId, lectureData).then(() => {
+        alert('Lecture Added Successfully.');
+        this.closeAddLectureDialog();
+      }).catch(error => {
+        console.error('Failed to add lecture:', error);
+        alert('Failed to add lecture.');
+      });
+    }
   }
 
   submitAssignment(formValue: any): void {
@@ -45,9 +67,6 @@ export class InstructorCoursesComponent {
     }
   }
 
-  addLectures(courseId: string) {
-
-  }
 
   addMultimedia(courseId: string) {
   }

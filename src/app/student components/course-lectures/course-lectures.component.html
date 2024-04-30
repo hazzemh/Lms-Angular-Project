@@ -1,0 +1,12 @@
+<!-- course-lectures.component.html -->
+<h2>Lectures</h2>
+<ul *ngIf="lectures$ | async as lectures; else loading">
+  <li *ngFor="let lecture of lectures">
+    <h4>{{ lecture.title }}</h4>
+    <p>{{ lecture.description }}</p>
+    <a href="{{ lecture.videoUrl }}" target="_blank">Watch Video</a>
+  </li>
+</ul>
+<ng-template #loading>
+  <p class="loading">Loading lectures...</p>
+</ng-template>

@@ -3,6 +3,7 @@ import { CoursesService } from '../services/courses service/courses.service';
 import { Observable } from 'rxjs';
 import { Course } from '../../models/course.model';
 import { AuthService } from '../../authentication service/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-course-materials',
@@ -13,7 +14,7 @@ export class CourseMaterialsComponent implements OnInit {
   courses$!: Observable<Course[]>;
   userId: string | null = null;
 
-  constructor(private coursesService: CoursesService, private authService: AuthService,) { }
+  constructor(private router: Router,private coursesService: CoursesService, private authService: AuthService,) { }
 
   ngOnInit(): void {
     this.authService.getCurrentStudentObservable().subscribe(uid => {
@@ -23,5 +24,9 @@ export class CourseMaterialsComponent implements OnInit {
         console.log('course materials : ', this.courses$);
       }
     });
+  }
+
+  goToLectures(courseId: string): void {
+    this.router.navigate(['/courses', courseId, 'lectures']);
   }
 }

@@ -14,6 +14,17 @@ import { CourseProgress } from '../../../models/courseProgress.model';
 export class CoursesService {
   constructor(private db: AngularFirestore, private authService: AuthService) { }
 
+  addLecture(courseId: string, lecture: any): Promise<void> {
+    const lectureId = this.db.createId();
+    return this.db.doc(`courses/${courseId}/lectures/${lectureId}`).set({
+      ...lecture,
+    });
+  }
+
+  getLectures(courseId: string) {
+    return this.db.collection(`courses/${courseId}/lectures`).valueChanges({ idField: 'id' });
+  }
+
   getProgressWithCourseDetails(studentId: string): Observable<CourseProgress[]> {
     return this.db.collection('progress').doc(studentId)
       .collection<CourseProgress>('courses').snapshotChanges().pipe(

@@ -6,7 +6,7 @@
       <h3>{{ course.title }}</h3>
       <p>{{ course.description }}</p>
       <div *ngIf="course.id as courseId">
-        <button (click)="addLectures(course.id)" class="btn btn-secondary">Add Lectures</button>
+        <button (click)="openAddLectureDialog(course.id)" class="btn btn-secondary">Add Lectures</button>
         <button (click)="addMultimedia(course.id)" class="btn btn-secondary">Add Multimedia</button>
         <button (click)="openAddAssignmentDialog(course.id)" class="btn btn-secondary">Add Assignment</button>
       </div>
@@ -16,6 +16,31 @@
     <p class="no-courses">No courses found.</p>
   </ng-template>
 </div>
+
+
+<!-- Add Lecture Modal -->
+<div id="addLectureModal" class="modal" [class.show]="isAddLectureDialogOpen">
+  <div class="modal-content show">
+    <h2>Add Lecture</h2>
+    <ng-container *ngIf="selectedCourseId">
+      <form #lectureForm="ngForm" (ngSubmit)="submitLecture(lectureForm.value)">
+        <label for="lectureTitle">Title:</label>
+        <input type="text" id="lectureTitle" name="title" ngModel required>
+
+        <label for="lectureDescription">Description:</label>
+        <textarea id="lectureDescription" name="description" ngModel required></textarea>
+
+        <label for="videoUrl">Video URL:</label>
+        <input type="url" id="videoUrl" name="videoUrl" ngModel>
+
+        <button type="submit" class="btn">Add Lecture</button>
+      </form>
+    </ng-container>
+    <button class="close" (click)="closeAddLectureDialog()">X</button>
+  </div>
+</div>
+
+
 <!-- Add Assignment Modal -->
 <div id="addAssignmentModal" class="modal" [class.show]="isAddAssignmentDialogOpen">
   <div class="modal-content show">
