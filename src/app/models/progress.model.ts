@@ -1,6 +1,7 @@
 export interface Progress {
-  studentId: string;
   courseId: string;
   completed: boolean;
   progress?: number;
+  grade : string;
+  courseTitle?: string; 
   }

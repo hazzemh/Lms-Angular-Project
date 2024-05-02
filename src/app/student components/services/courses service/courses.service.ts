@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs/internal/Observable';
 import { AuthService } from '../../../authentication service/auth.service';
-import { switchMap, of, combineLatest, map, catchError, first, throwError, forkJoin, tap, from } from 'rxjs';
+import { switchMap, of, combineLatest, map, catchError, first, throwError, forkJoin, tap, from, mergeMap, toArray } from 'rxjs';
 import { Course } from '../../../models/course.model';
 import firebase from 'firebase/compat/app';
 import { CourseProgress } from '../../../models/courseProgress.model';
+import { Progress } from '../../../models/progress.model';
 
 
 @Injectable({
@@ -59,6 +60,26 @@ export class CoursesService {
       );
   }
 
+  getStudentProgress(userId: string): Observable<Progress[]> {
+    return this.db.collection(`users/${userId}/progress`).snapshotChanges().pipe(
+      mergeMap(actions => from(actions)),
+      mergeMap(action => {
+        const data = action.payload.doc.data() as Progress;
+        const courseId = action.payload.doc.id;
+        return this.db.collection('courses').doc<Course>(courseId).valueChanges().pipe(
+          map(course => {
+            return {
+              ...data,
+              courseId: courseId,
+              courseTitle: course ? course.title : 'No title' 
+            };
+          })
+        );
+      }),
+      toArray()
+    );
+  }
+  
   updateCourse(id: string, course: Partial<Course>): Promise<void> {
     return this.db.collection('courses').doc(id).update(course);
   }
@@ -76,14 +97,54 @@ export class CoursesService {
   }
 
   addStudentToCourse(courseId: string, studentId: string): Promise<void> {
-    return this.db.collection('courses').doc(courseId).update({
-      enrolledStudents: firebase.firestore.FieldValue.arrayUnion(studentId)
+    const courseRef = this.db.collection('courses').doc(courseId);
+    const studentProgressRef = this.db.collection(`users/${studentId}/progress`).doc(courseId);
+
+    return this.db.firestore.runTransaction(async transaction => {
+      const courseDoc = await transaction.get(courseRef.ref);
+
+      if (!courseDoc.exists) {
+        throw new Error("Course does not exist!");
+      }
+
+      transaction.update(courseRef.ref, {
+        enrolledStudents: firebase.firestore.FieldValue.arrayUnion(studentId)
+      });
+
+      transaction.set(studentProgressRef.ref, {
+        completed: 0,
+        grade: "",
+        progress: 10
+      }, { merge: true });
+
+    }).catch(error => {
+      console.error("Transaction failed: ", error);
+      throw error;
     });
   }
 
   removeStudentFromCourse(courseId: string, studentId: string): Promise<void> {
-    return this.db.collection('courses').doc(courseId).update({
-      enrolledStudents: firebase.firestore.FieldValue.arrayRemove(studentId)
+    const courseRef = this.db.collection('courses').doc(courseId);
+    const progressRef = this.db.collection(`users/${studentId}/progress`).doc(courseId);
+
+    return this.db.firestore.runTransaction(async transaction => {
+      const courseDoc = await transaction.get(courseRef.ref);
+
+      if (!courseDoc.exists) {
+        throw new Error("Course does not exist!");
+      }
+
+      transaction.update(courseRef.ref, {
+        enrolledStudents: firebase.firestore.FieldValue.arrayRemove(studentId)
+      });
+
+      transaction.delete(progressRef.ref);
+
+    }).then(() => {
+      console.log("Student removed from course and progress deleted successfully.");
+    }).catch(error => {
+      console.error("Transaction failed: ", error);
+      throw error;
     });
   }
 
@@ -169,13 +230,6 @@ export class CoursesService {
     return this.db.collection(`courses/${courseId}/assignments`).valueChanges({ idField: 'id' });
   }
 
-  enrollStudentInCourse(studentId: string, courseId: string): Promise<void> {
-    return this.db.collection('users').doc(studentId)
-      .collection('enrolledCourses').doc(courseId).set({
-        enrolledDate: new Date()
-      });
-  }
-
   getEnrolledCourses(userId: string) {
     return this.db.collection(`users/${userId}/enrolledCourses`).snapshotChanges().pipe(
       switchMap(enrollments => {
@@ -191,9 +245,9 @@ export class CoursesService {
   }
 
   getAssignedCourses(userId: string): Observable<Course[]> {
-    return this.db.collection<Course>('courses', ref => 
+    return this.db.collection<Course>('courses', ref =>
       ref.where('enrolledStudents', 'array-contains', userId)
-         .where('isActive', '==', true))
+        .where('isActive', '==', true))
       .snapshotChanges()
       .pipe(
         map(actions => actions.map(a => {
