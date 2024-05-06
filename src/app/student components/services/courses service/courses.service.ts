@@ -179,6 +179,7 @@ export class CoursesService {
         if (user) {
           const course = {
             ...courseData,
+            isActive : true,
             instructorId: user.uid
           };
           return this.db.collection('courses').add(course);
@@ -209,8 +210,9 @@ export class CoursesService {
   }
 
   getMyCourses(instructorId: string): Observable<Course[]> {
-    return this.db.collection<Course>('courses', ref =>
-      ref.where('instructorId', '==', instructorId))
+    return this.db.collection<Course>('courses', ref => 
+      ref.where('instructorId', '==', instructorId)
+         .where('isActive', '==', true))
       .valueChanges({ idField: 'id' });
   }
 

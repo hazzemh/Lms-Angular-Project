@@ -2,8 +2,6 @@
 <header>
   <h1>LMS</h1>
   <nav>
-    <!-- Common Home link for all logged-in users -->
-    <!-- <a *ngIf="isLoggedIn$ | async" routerLink="/home">Home</a> -->
 
     <!-- Instructor-specific links -->
     <a *ngIf="(isLoggedIn$ | async) && (userRole$ | async) === 'instructor'" routerLink="/instructor-dashboard">Home</a>
