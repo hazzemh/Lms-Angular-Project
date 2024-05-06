@@ -77,7 +77,7 @@ export class AuthService {
     });
   }
 
-  register(email: string, password: string, name:string, role: string): Promise<void> {
+  register(email: string, password: string, name: string, role: string): Promise<void> {
     return this.afAuth.createUserWithEmailAndPassword(email, password)
       .then(userCredential => {
         const user = userCredential.user;
@@ -86,7 +86,9 @@ export class AuthService {
             email: email,
             name: name,
             role: role,
-            status : "inactive"
+            status: "inactive"
+          }).then(() => {
+            return this.afAuth.signOut();
           });
         } else {
           throw new Error('User registration failed');
@@ -97,6 +99,7 @@ export class AuthService {
         throw error;
       });
   }
+  
 
   login(email: string, password: string): Promise<any> {
     return this.afAuth.signInWithEmailAndPassword(email, password);

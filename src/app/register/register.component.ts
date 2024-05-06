@@ -32,21 +32,22 @@ export class RegisterComponent implements OnInit {
     if (this.registerForm.invalid) {
       return;
     }
-
+  
     this.isLoading = true;
-
+  
     try {
       const { email, password, name, role } = this.registerForm.value;
-      await this.authService.register(email, password,name, role);
-      Swal.fire('Success!', 'Regisetration successful, waiting for admin to activate it.', 'success');
+      await this.authService.register(email, password, name, role);
+      Swal.fire('Success!', 'Registration successful, waiting for admin to activate it.', 'success');
       this.router.navigate(['/login']);
     } catch (error) {
-      Swal.fire('Error!', 'Registeration Failed', 'error');
+      Swal.fire('Error!', 'Registration Failed', 'error');
       this.handleError(error);
     } finally {
       this.isLoading = false;
     }
   }
+  
 
   private handleError(error: any): void {
     Swal.fire('Error!', 'Registeration Failed', 'error');
