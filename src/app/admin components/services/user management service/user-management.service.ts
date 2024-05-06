@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AuthService } from '../../../authentication service/auth.service';
-import { Observable, switchMap, of, map } from 'rxjs';
+import { Observable, of, switchMap } from 'rxjs';
 import { User } from '../../../models/userDetails.model';
-
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +19,12 @@ export class UserManagementService {
       .valueChanges({ idField: 'uid' });
   }
 
+  getUserById(userId: string): Observable<User | null> {
+    return this.firestore.doc<User>(`users/${userId}`).valueChanges().pipe(
+      switchMap(user => user ? of(user) : of(null))
+    );
+  }
+
   updateUserStatus(userId: string, status: boolean) {
     return this.firestore.doc(`users/${userId}`).update({ status: status ? 'active' : 'inactive' });
   }
@@ -29,7 +34,7 @@ export class UserManagementService {
       switchMap(user => {
         if (!user) return of(null);
         return this.firestore.doc<User>(`users/${user.uid}`).valueChanges().pipe(
-          map(userDetails => userDetails || null)
+          switchMap(userDetails => userDetails ? of(userDetails) : of(null))
         );
       })
     );

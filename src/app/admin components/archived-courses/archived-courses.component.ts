@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Course } from '../../models/course.model';
 import { CoursesService } from '../../student components/services/courses service/courses.service';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-archived-courses',
   templateUrl: './archived-courses.component.html',
@@ -23,8 +23,7 @@ export class ArchivedCoursesComponent implements OnInit {
 
   unarchiveCourse(courseId: string): void {
     this.coursesService.unarchiveCourse(courseId).then(() => {
-      console.log('Course unarchived successfully');
-      alert('Course unarchived successfully');
+      Swal.fire('Success!', 'Course unarchived successfully', 'success');
       this.loadArchivedCourses();
     });
   }

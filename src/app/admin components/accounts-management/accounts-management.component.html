@@ -13,10 +13,10 @@
     <td>{{ user.role }}</td>
     <td>{{ user.status }}</td>
     <td>
-      <button (click)="toggleUserStatus(user)">
+      <button class="active" (click)="toggleUserStatus(user)">
         {{ user.status === 'active' ? 'Deactivate' : 'Activate' }}
       </button>
-      <button (click)="deleteUser(user.uid)">Delete</button>
+      <button class="delete" (click)="deleteUser(user.uid)">Delete</button>
     </td>
   </tr>
 </table>

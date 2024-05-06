@@ -2,6 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { combineLatest, Observable, Subscription, map, of } from 'rxjs';
 import { CoursesService } from '../../student components/services/courses service/courses.service';
 import { UserManagementService } from '../services/user management service/user-management.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-admin-enrollment',
@@ -48,21 +49,18 @@ export class AdminEnrollmentComponent implements OnDestroy {
 
   assignStudent(courseId: string, studentId: string) {
     this.courseService.addStudentToCourse(courseId, studentId).then(() => {
-      console.log('Student added successfully');
-      alert('Student added successfully');
+      Swal.fire('Success!', 'Student added successfully', 'success');
+
     }).catch(error => {
-      console.error('Failed to add student', error);
-      alert('Failed to add student');
+      Swal.fire('Error!', 'Failed to add student.', 'error');
     });
   }
 
   unassignStudent(courseId: string, studentId: string) {
     this.courseService.removeStudentFromCourse(courseId, studentId).then(() => {
-      console.log('Student removed successfully');
-      alert('Student removed successfully')
+      Swal.fire('Success!', 'Student removed successfully', 'success');
     }).catch(error => {
-      console.error('Failed to remove student', error);
-      alert('Failed to remove student');
+      Swal.fire('Error!', 'Failed to remove student.', 'error');
     });
   }
 }

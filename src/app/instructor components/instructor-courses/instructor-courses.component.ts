@@ -3,11 +3,12 @@ import { Observable } from 'rxjs';
 import { Course } from '../../models/course.model';
 import { AuthService } from '../../authentication service/auth.service';
 import { CoursesService } from '../../student components/services/courses service/courses.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-instructor-courses',
   templateUrl: './instructor-courses.component.html',
-  styleUrl: './instructor-courses.component.css'
+  styleUrls: ['./instructor-courses.component.css']
 })
 export class InstructorCoursesComponent {
   isAddLectureDialogOpen = false;
@@ -47,11 +48,18 @@ export class InstructorCoursesComponent {
   submitLecture(lectureData: any) {
     if (this.selectedCourseId) {
       this.coursesService.addLecture(this.selectedCourseId, lectureData).then(() => {
-        alert('Lecture Added Successfully.');
+        Swal.fire({
+          title: 'Success!',
+          text: 'Lecture Added Successfully.',
+          icon: 'success'
+        });
         this.closeAddLectureDialog();
       }).catch(error => {
-        console.error('Failed to add lecture:', error);
-        alert('Failed to add lecture.');
+        Swal.fire({
+          title: 'Error!',
+          text: 'Failed to add lecture.',
+          icon: 'error'
+        });
       });
     }
   }
@@ -59,16 +67,23 @@ export class InstructorCoursesComponent {
   submitAssignment(formValue: any): void {
     if (this.selectedCourseId) {
       this.coursesService.addAssignment(this.selectedCourseId, formValue).then(() => {
-        console.log('Assignment added successfully');
+        Swal.fire(
+          'Success!',
+          'Assignment added successfully',
+          'success'
+        );
         this.closeAddAssignmentDialog();
       }).catch(error => {
-        console.error('Error adding assignment:', error);
+        Swal.fire(
+          'Error!',
+          'Error adding assignment',
+          'error'
+        );
       });
     }
   }
 
-
   addMultimedia(courseId: string) {
+    // Add multimedia handling here
   }
-
 }

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../authentication service/auth.service';
 import { FirebaseService } from '../firebase service/firebase.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -47,16 +48,15 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['/student-dashboard']);
             break;
           default:
-            alert('Your role is not recognized in the system.');
+            Swal.fire('Error!', 'Your role is not recognized in the system.', 'error');
             break;
         }
       } else {
         this.authService.logout();
-        alert('Your account is either inactive or your role/status is incomplete.');
+        Swal.fire('Error!', 'Your account is either inactive or your role/status is incomplete.', 'error');
       }
     } catch (error) {
-      console.error('Login error:', error);
-      alert('Login failed: ' + (error as Error).message);
+      Swal.fire('Error!', 'Invalid Credentials!', 'error');
     }
   }
 

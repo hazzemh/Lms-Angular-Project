@@ -1,29 +1,33 @@
 import { Component, OnInit } from '@angular/core';
 import { Course } from '../../models/course.model';
 import { CoursesService } from '../../student components/services/courses service/courses.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-course-management',
   templateUrl: './course-management.component.html',
-  styleUrl: './course-management.component.css'
+  styleUrls: ['./course-management.component.css'] // Correct the property name from styleUrl to styleUrls
 })
 export class CourseManagementComponent implements OnInit {
   courses: Course[] = [];
   selectedCourse?: Course;
   isEditModalOpen = false;
 
-  constructor(private courseService: CoursesService) {
-    this.loadCourses();
-  }
+  constructor(private courseService: CoursesService) {}
 
   ngOnInit(): void {
     this.loadCourses();
   }
 
   loadCourses(): void {
-    this.courseService.getAllCourses().subscribe(courses => {
-      this.courses = courses;
-    });
+    this.courseService.getAllCourses().subscribe(
+      courses => {
+        this.courses = courses;
+      },
+      error => {
+        Swal.fire('Error!', 'Failed to load courses.', 'error');
+      }
+    );
   }
 
   openEditModal(course: Course): void {
@@ -35,42 +39,34 @@ export class CourseManagementComponent implements OnInit {
     this.isEditModalOpen = false;
   }
 
-  // addCourse(): void {
-  //   const newCourse: Course = { title: 'New Course', description: 'Description', instructor: 'Instructor', isActive: true };
-  //   this.courseService.addCourse(newCourse).then(() => console.log('Course added'));
-  // }
-
   updateCourse(course: Course): void {
     if (!course.id) {
-      console.error('Cannot update course without an ID');
+      Swal.fire('Error!', 'Cannot update course without an ID', 'error');
       return;
     }
-  
+
     this.courseService.updateCourse(course.id, {
       title: course.title,
       description: course.description, 
       instructorId: course.instructorId
     }).then(() => {
-      console.log('Course updated successfully:', course.title);
-      alert('Course updated successfully');
+      Swal.fire('Success!', 'Course updated successfully', 'success');
       this.closeEditModal();
     }).catch(error => {
-      alert('Failed to update Course!');
-      console.error('Failed to update course', error);
+      Swal.fire('Error!', 'Failed to update course', 'error');
     });
   }
 
   archiveCourse(courseId: string | undefined): void {
-    if (courseId) {
-      this.courseService.archiveCourse(courseId).then(() => {
-        console.log('Course archived successfully');
-        alert('Course archived successfully');
-      }).catch(error => {
-        alert('Failed to archive course');
-        console.error('Failed to archive course', error);
-      });
-    } else {
-      console.error('Attempted to archive a course without an ID');
+    if (!courseId) {
+      Swal.fire('Error!', 'Attempted to archive a course without an ID', 'error');
+      return;
     }
+    
+    this.courseService.archiveCourse(courseId).then(() => {
+      Swal.fire('Success!', 'Course archived successfully', 'success');
+    }).catch(error => {
+      Swal.fire('Error!', 'Failed to archive course', 'error');
+    });
   }
 }

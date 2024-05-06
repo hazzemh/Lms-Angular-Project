@@ -15,13 +15,13 @@
   </div>
   
   <!-- Submission Modal -->
-  <div id="submissionModal" class="modal" [ngStyle]="{ 'display': isSubmissionDialogOpen ? 'block' : 'none' }">
+  <div id="submissionModal" class="modal" [ngStyle]="{ 'display': isSubmissionDialogOpen ? 'block' : 'none' }"[class.show]="isSubmissionDialogOpen">
     <div class="modal-content">
       <h2>Submit Assignment</h2>
       <ng-container *ngIf="selectedAssignmentId && selectedCourseId">
         <app-assignment-submission [assignmentId]="selectedAssignmentId" [courseId]="selectedCourseId"></app-assignment-submission>
       </ng-container>
-      <button (click)="closeSubmissionDialog()">Close</button>
+      <button class="close" (click)="closeSubmissionDialog()">X</button>
     </div>
   </div>
 </div>

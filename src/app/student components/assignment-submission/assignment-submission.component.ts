@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { AssignmentsService } from '../services/assignments service/assignments.service';
 import { AuthService } from '../../authentication service/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-assignment-submission',
@@ -49,16 +50,14 @@ export class AssignmentSubmissionComponent {
         this.courseId
       ).subscribe({
         next: (docRef) => {
-          console.log('Assignment submitted successfully', docRef.id);
-          alert('Assignment submitted successfully');
+          Swal.fire('Success!', 'Assignment submitted successfully', 'success');
         },
         error: (error) => {
-          console.error('Failed to submit assignment:', error);
-          alert('Assignment submitted successfully');
+          Swal.fire('Error!', 'Failed to submit Assignment', 'error');
         }
       });
     } else {
-      alert('No file selected');
+      Swal.fire('Error!', 'No File selected!', 'error');
     }
   }
 }

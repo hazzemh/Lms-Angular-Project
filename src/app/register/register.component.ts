@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../authentication service/auth.service';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -38,10 +38,10 @@ export class RegisterComponent implements OnInit {
     try {
       const { email, password, name, role } = this.registerForm.value;
       await this.authService.register(email, password,name, role);
-      alert('Registration successful, waiting for admin to activate it.');
+      Swal.fire('Success!', 'Regisetration successful, waiting for admin to activate it.', 'success');
       this.router.navigate(['/login']);
     } catch (error) {
-      console.error('Registration error:', error);
+      Swal.fire('Error!', 'Registeration Failed', 'error');
       this.handleError(error);
     } finally {
       this.isLoading = false;
@@ -49,6 +49,6 @@ export class RegisterComponent implements OnInit {
   }
 
   private handleError(error: any): void {
-    alert('Registration failed. Please try again later.');
+    Swal.fire('Error!', 'Registeration Failed', 'error');
   }
 }

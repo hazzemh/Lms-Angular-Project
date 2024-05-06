@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { CoursesService } from '../../student components/services/courses service/courses.service';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-course-creation',
   templateUrl: './course-creation.component.html',
@@ -14,12 +14,12 @@ export class CourseCreationComponent {
     if (form.valid) {
       this.coursesService.addCourse(form.value).subscribe({
         next: () => {
-           alert('Course added successfully');
+          Swal.fire('Success!', 'Course Added Successfully', 'success');
            form.reset();
            },
         error: (error) =>{
            console.error(error);
-           alert('Failed to add course. Please try again.');
+           Swal.fire('Error!', 'Failed to add course!', 'error');
           }
       });
     }

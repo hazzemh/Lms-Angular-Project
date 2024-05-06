@@ -55,7 +55,12 @@ h2 {
     transition: background-color 0.2s ease, transform 0.2s ease;
     margin-right: 8px;
   }
-  
+  button.delete {
+    background-color: #e80e19;
+  }
+  button.delete:hover{
+    background-color: #b60b14;
+  }
   button:hover {
     background-color: #0056b3;
     transform: translateY(-3px);
