@@ -14,7 +14,7 @@ export class GradesComponent {
       yearWork: 10,
       midterm: 15,
       quizzes: 5,
-      finalExam: 59
+      finalExam: 50
     },
     {
       courseTitle: 'Flutter',
