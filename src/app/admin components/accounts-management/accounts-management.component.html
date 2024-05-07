@@ -1,4 +1,7 @@
 <h2>User Management Dashboard</h2>
+
+<input class="search" type="text" placeholder="Search users..." [(ngModel)]="searchText" (keyup)="onSearchTextChanged()" style="margin-bottom: 10px;margin-top: 10px; padding: 10px; width: 15%;">
+
 <table>
   <tr>
     <th>Name</th>
@@ -7,7 +10,7 @@
     <th>Status</th>
     <th>Actions</th>
   </tr>
-  <tr *ngFor="let user of users">
+  <tr *ngFor="let user of filteredUsers">
     <td>{{ user.name }}</td>
     <td>{{ user.email }}</td>
     <td>{{ user.role }}</td>
@@ -20,3 +23,11 @@
     </td>
   </tr>
 </table>
+<div *ngIf="selectedUser" class="user-details">
+  <h3>Selected User Details:</h3>
+  <p>Name: {{ selectedUser.name }}</p>
+  <p>Email: {{ selectedUser.email }}</p>
+  <p>Role: {{ selectedUser.role }}</p>
+  <p>Status: {{ selectedUser.status }}</p>
+  <button (click)="selectedUser = null">Close Details</button>
+</div>

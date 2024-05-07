@@ -5,17 +5,32 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-accounts-management',
   templateUrl: './accounts-management.component.html',
-  styleUrls: ['./accounts-management.component.css'] // Fixed 'styleUrls' instead of 'styleUrl'
+  styleUrls: ['./accounts-management.component.css'] 
 })
 export class AccountsManagementComponent implements OnInit {
-  users!: any[];
+  users: any[] = [];
+  filteredUsers: any[] = [];
+  searchText: string = '';
+  selectedUser: any = null; 
 
   constructor(private userManagementService: UserManagementService) {}
 
   ngOnInit() {
     this.userManagementService.fetchUsers().subscribe(users => {
       this.users = users;
+      this.filteredUsers = users;
     });
+  }
+
+  onSearchTextChanged() {
+    this.filteredUsers = this.searchText ? this.filterUsers(this.searchText) : this.users;
+  }
+
+  filterUsers(query: string): any[] {
+    return this.users.filter(user => user.name.toLowerCase().includes(query) ||
+                                      user.email.toLowerCase().includes(query) ||
+                                      user.role.toLowerCase().includes(query) ||
+                                      user.status.toLowerCase().includes(query));
   }
 
   toggleUserStatus(user: any) {
@@ -38,6 +53,8 @@ export class AccountsManagementComponent implements OnInit {
       }
     });
   }
-  
+  selectUser(user: any) { 
+    this.selectedUser = user;
+  }
   
 }
