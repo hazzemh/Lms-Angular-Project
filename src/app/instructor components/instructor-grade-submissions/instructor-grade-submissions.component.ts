@@ -3,7 +3,7 @@ import { combineLatest, map, Observable, switchMap } from 'rxjs';
 import { Submission } from '../../models/submission.model';
 import { SubmissionsService } from '../services/submission service/submissions.service';
 import { EnrichedSubmission } from '../../models/enrichedSubmission.model';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-instructor-grade-submissions',
   templateUrl: './instructor-grade-submissions.component.html',
@@ -42,7 +42,7 @@ export class InstructorGradeSubmissionsComponent implements OnInit {
     const safeFeedback = feedback ?? 'No Feedback';
 
     this.submissionsService.updateGrade(submission.id, safeGrade, safeFeedback)
-      .then(() => alert('Grade successfully updated'))
-      .catch(err => alert('Error updating grade: ' + err));
+      .then(() => Swal.fire('Success!', 'Course Added Successfully', 'success'))
+      .catch(err => Swal.fire('Error!', 'Failed to add course!', 'error'));
   }
 }
