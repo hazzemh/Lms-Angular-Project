@@ -90,24 +90,24 @@ h2 {
     position: relative;
     background-color: #f9f9f9;
   }
- /* Updated search input styling */
+
 input.search {
-  width: 50%;                 /* Control width, adjust as needed */
-  padding: 8px 12px;          /* Spacing inside the input */
-  border: 1px solid #ccc;     /* Subtle, soft border */
-  border-radius: 4px;         /* Rounded corners for a modern look */
-  background-color: #f9f9f9;  /* Light background to keep it clean and simple */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  font-size: 16px;            /* Slightly larger font for better readability */
-  color: #333;                /* Dark color for text for better contrast */
-  transition: all 0.3s ease;  /* Smooth transition for focus effects */
+  width: 50%;           
+  padding: 8px 12px;      
+  border: 1px solid #ccc;    
+  border-radius: 4px;        
+  background-color: #f9f9f9;  
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+  font-size: 16px;           
+  color: #333;                
+  transition: all 0.3s ease; 
 }
 
-/* Enhancing focus state to improve UX */
+
 input.search:focus {
-  border-color: #1593C9;      /* Highlight color when focused */
-  box-shadow: 0 2px 8px rgba(0, 120, 215, 0.25); /* More prominent shadow on focus */
-  outline: none;              /* Remove default focus outline */
+  border-color: #0056b3;      
+  box-shadow: 0 2px 8px rgba(0, 120, 215, 0.25); 
+  outline: none;            
 }
 
 /* Placeholder styling */
