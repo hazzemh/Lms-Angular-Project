@@ -6,8 +6,8 @@
       <h3>{{ course.title }}</h3>
       <p>{{ course.description }}</p>
       <div *ngIf="course.id as courseId">
-        <button (click)="openAddLectureDialog(course.id)" class="btn btn-secondary">Add Lectures</button>
-        <button (click)="openAddAssignmentDialog(course.id)" class="btn btn-secondary">Add Assignment</button>
+        <button (click)="openAddLectureDialog(course.id)" class="btn lec">Add Lectures</button>
+        <button (click)="openAddAssignmentDialog(course.id)" class="btn assignment">Add Assignment</button>
       </div>
     </div>
   </div>
