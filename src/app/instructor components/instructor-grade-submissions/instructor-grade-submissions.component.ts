@@ -42,7 +42,7 @@ export class InstructorGradeSubmissionsComponent implements OnInit {
     const safeFeedback = feedback ?? 'No Feedback';
 
     this.submissionsService.updateGrade(submission.id, safeGrade, safeFeedback)
-      .then(() => Swal.fire('Success!', 'Course Added Successfully', 'success'))
-      .catch(err => Swal.fire('Error!', 'Failed to add course!', 'error'));
+      .then(() => Swal.fire('Success!', 'Grade Added Successfully', 'success'))
+      .catch(err => Swal.fire('Error!', 'Failed to add Grade!', 'error'));
   }
 }
