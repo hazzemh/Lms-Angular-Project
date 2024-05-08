@@ -2,7 +2,7 @@
   <h2>Submit Your Assignment</h2>
   <div *ngIf="studentId">
     <input type="file" (change)="onFileSelected($event)" id="file">
-    <label for="file" class="file-label">Choose a file</label>
+    <label for="file" class="file-label">{{ fileLabelText }}</label>
     <button (click)="onSubmitAssignment()" [disabled]="!selectedFile" class="submit-button">Submit Assignment</button>
     <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
   </div>
