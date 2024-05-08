@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs/internal/Observable';
 import { AuthService } from '../../../authentication service/auth.service';
-import { switchMap, of, combineLatest, map, catchError, first, throwError, forkJoin, tap, from, mergeMap, toArray } from 'rxjs';
+import { switchMap, of, combineLatest, map, catchError, first, throwError, forkJoin, tap, from, mergeMap, toArray, startWith } from 'rxjs';
 import { Course } from '../../../models/course.model';
 import firebase from 'firebase/compat/app';
 import { CourseProgress } from '../../../models/courseProgress.model';
 import { Progress } from '../../../models/progress.model';
+import { User } from '../../../models/userDetails.model';
 
 
 @Injectable({
@@ -160,17 +161,47 @@ export class CoursesService {
 
   getEnrolledStudents(courseId: string): Observable<any[]> {
     return this.db.collection('courses').doc<Course>(courseId).valueChanges().pipe(
+      tap(course => console.log('Course data:', course)), // Log course data
       switchMap(course => {
         if (!course || !course.enrolledStudents || course.enrolledStudents.length === 0) {
+          console.log('No enrolled students or course data missing');
           return of([]);
         }
         const studentObservables = course.enrolledStudents.map(studentId =>
-          this.db.collection('users').doc(studentId).valueChanges()
+          this.db.collection('users').doc<User>(studentId).valueChanges().pipe(
+            tap(user => console.log(`Fetching data for student ${studentId}:`, user)) // Log each user's data
+          )
         );
         return forkJoin(studentObservables);
       })
     );
   }
+  
+  getEnrolledStudentsInCourse(courseId: string): Observable<User[]> {
+    return this.db.collection('courses').doc<Course>(courseId).valueChanges().pipe(
+      tap(course => console.log('Course data:', course)),
+      switchMap(course => {
+        if (!course || !course.enrolledStudents || course.enrolledStudents.length === 0) {
+          console.log('No enrolled students or course data missing');
+          return of([]);
+        }
+        const studentObservables = course.enrolledStudents.map(studentId =>
+          this.db.collection('users').doc<User>(studentId).valueChanges().pipe(
+            catchError(err => {
+              console.error(`Error fetching user ${studentId}:`, err);
+              return of(null);
+            })
+          )
+        );
+        
+        return forkJoin(studentObservables).pipe(
+          map(users => users.filter((user): user is User => user !== null && user !== undefined)),
+          tap(filteredUsers => console.log('Filtered users:', filteredUsers))
+        );
+      })
+    );
+  }
+  
 
   addCourse(courseData: any): Observable<any> {
     return this.authService.getCurrentUserObservable().pipe(

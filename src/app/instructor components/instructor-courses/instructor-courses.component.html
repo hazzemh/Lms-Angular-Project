@@ -7,7 +7,6 @@
       <p>{{ course.description }}</p>
       <div *ngIf="course.id as courseId">
         <button (click)="openAddLectureDialog(course.id)" class="btn btn-secondary">Add Lectures</button>
-        <button (click)="addMultimedia(course.id)" class="btn btn-secondary">Add Multimedia</button>
         <button (click)="openAddAssignmentDialog(course.id)" class="btn btn-secondary">Add Assignment</button>
       </div>
     </div>

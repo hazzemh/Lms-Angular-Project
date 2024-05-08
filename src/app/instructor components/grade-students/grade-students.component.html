@@ -1,0 +1,17 @@
+<h2>Manage Grades</h2>
+<div *ngIf="students$ | async as students; else loading">
+    <p>Students Loaded: {{ students.length }}</p> <!-- Check how many students are loaded -->
+    <ul>
+        <li *ngFor="let student of students">
+            {{ student.name }}
+            <input type="number" [(ngModel)]="grades[student.uid].yearWork" placeholder="Yearwork">
+            <input type="number" [(ngModel)]="grades[student.uid].midterm" placeholder="Midterm">
+            <input type="number" [(ngModel)]="grades[student.uid].quizzes" placeholder="Quizzes">
+            <input type="number" [(ngModel)]="grades[student.uid].practical" placeholder="Practical">
+            <button (click)="updateGrade(student.uid, grades[student.uid])">Save Grades</button>
+        </li>
+    </ul>
+</div>
+<ng-template #loading>
+    <p>Loading students...</p>
+</ng-template>
