@@ -112,7 +112,7 @@ export class CoursesService {
       });
 
       transaction.set(studentProgressRef.ref, {
-        completed: 0,
+        completed: false,
         grade: "",
         progress: 10
       }, { merge: true });
