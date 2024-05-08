@@ -6,14 +6,13 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-assignment-submission',
   templateUrl: './assignment-submission.component.html',
-  styleUrl: './assignment-submission.component.css'
+  styleUrls: ['./assignment-submission.component.css']
 })
 export class AssignmentSubmissionComponent {
   selectedFile: File | null = null;
-  @Input()
-  assignmentId!: string; 
-  @Input()
-  courseId!: string;
+  fileLabelText: string = "Choose a file"; // Default text for the label
+  @Input() assignmentId!: string;
+  @Input() courseId!: string;
   errorMessage: string | null = null;
   studentId: string | null = null;
 
@@ -32,6 +31,9 @@ export class AssignmentSubmissionComponent {
     let file = element.files ? element.files[0] : null;
     if (file) {
       this.selectedFile = file;
+      this.fileLabelText = "File Selected: " + file.name; // Update the label text to show the file name
+    } else {
+      this.fileLabelText = "Choose a file"; // Reset label text if no file selected
     }
   }
 
@@ -40,7 +42,6 @@ export class AssignmentSubmissionComponent {
       alert('Missing assignment details');
       return;
     }
-
     if (this.selectedFile) {
       this.assignmentsService.uploadFileAndGetMetadata(
         'assignment_submissions', 
@@ -51,6 +52,7 @@ export class AssignmentSubmissionComponent {
       ).subscribe({
         next: (docRef) => {
           Swal.fire('Success!', 'Assignment submitted successfully', 'success');
+          this.fileLabelText = "Choose a file"; // Reset label text after submission
         },
         error: (error) => {
           Swal.fire('Error!', 'Failed to submit Assignment', 'error');
