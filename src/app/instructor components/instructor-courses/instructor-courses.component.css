@@ -74,7 +74,7 @@
   
 
   .btn-secondary {
-    margin-top: 25px; /* Space above the buttons */
+    margin-top: 50px; /* Space above the buttons */
     margin-bottom: 10px;
     margin-left: 21px; /* Space below the buttons, before the small tag */
     display: flex;
@@ -95,9 +95,20 @@
 
 .btn-secondary:hover {
     background-color: #5a6268;
+
 }
 
+button.btn.lec{
+  margin-top: 50px;
+  width: 155px;
+  margin-left: 21px;
+ 
+}
+button.btn.assignment{
+  margin-top: 20px;
+  margin-left: 21px;
 
+}
 
 /* for the add assignment modal */
 /* Add Assignment Modal Styles */
