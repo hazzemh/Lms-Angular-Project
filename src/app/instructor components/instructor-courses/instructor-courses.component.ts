@@ -66,7 +66,7 @@ export class InstructorCoursesComponent {
 
   submitAssignment(formValue: any): void {
     if (this.selectedCourseId) {
-      this.coursesService.addAssignment(this.selectedCourseId, formValue).then(() => {
+      this.coursesService.addAssignment(this.userId, this.selectedCourseId, formValue).then(() => {
         Swal.fire(
           'Success!',
           'Assignment added successfully',

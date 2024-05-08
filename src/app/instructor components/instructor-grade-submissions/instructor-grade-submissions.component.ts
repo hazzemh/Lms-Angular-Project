@@ -4,6 +4,7 @@ import { Submission } from '../../models/submission.model';
 import { SubmissionsService } from '../services/submission service/submissions.service';
 import { EnrichedSubmission } from '../../models/enrichedSubmission.model';
 import Swal from 'sweetalert2';
+import { AuthService } from '../../authentication service/auth.service';
 @Component({
   selector: 'app-instructor-grade-submissions',
   templateUrl: './instructor-grade-submissions.component.html',
@@ -11,26 +12,30 @@ import Swal from 'sweetalert2';
 })
 export class InstructorGradeSubmissionsComponent implements OnInit {
   enrichedSubmissions$!: Observable<EnrichedSubmission[]>;
+  userId!: string;
 
-  constructor(private submissionsService: SubmissionsService) {}
+  constructor(private authService: AuthService, private submissionsService: SubmissionsService) { }
 
   ngOnInit(): void {
-    this.enrichedSubmissions$ = this.submissionsService.getSubmissions().pipe(
-      switchMap(submissions => combineLatest(
-        submissions.map(submission => 
-          combineLatest([
-            this.submissionsService.getStudentName(submission.studentId),
-            this.submissionsService.getAssignmentTitle(submission.courseId , submission.assignmentId)
-          ]).pipe(
-            map(([user, assignment]) => ({
-              submission: submission,
-              user: user, 
-              assignment: assignment
-            }))
+    this.authService.getCurrentUserObservable().subscribe(user => {
+      this.userId = user ? user.uid : '';
+      this.enrichedSubmissions$ = this.submissionsService.getSubmissions(this.userId).pipe(
+        switchMap(submissions => combineLatest(
+          submissions.map(submission =>
+            combineLatest([
+              this.submissionsService.getStudentName(submission.studentId),
+              this.submissionsService.getAssignmentTitle(submission.courseId, submission.assignmentId)
+            ]).pipe(
+              map(([user, assignment]) => ({
+                submission: submission,
+                user: user,
+                assignment: assignment
+              }))
+            )
           )
-        )
-      ))
-    );
+        ))
+      );
+    });
   }
 
   saveGrade(submission: Submission, grade: string | undefined, feedback: string | undefined): void {

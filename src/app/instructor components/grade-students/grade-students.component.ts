@@ -22,9 +22,6 @@ export class GradeStudentsComponent implements OnInit {
     console.log('Course ID:', this.courseId);
     if (this.courseId) {
       this.students$ = this.courseService.getEnrolledStudentsInCourse(this.courseId);
-      this.students$.subscribe(students => {
-        console.log('Subscribed students:', students);
-      });
     } else {
       console.log('No Course ID provided');
     }

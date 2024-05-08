@@ -72,7 +72,7 @@ export class CoursesService {
             return {
               ...data,
               courseId: courseId,
-              courseTitle: course ? course.title : 'No title' 
+              courseTitle: course ? course.title : 'No title'
             };
           })
         );
@@ -80,7 +80,7 @@ export class CoursesService {
       toArray()
     );
   }
-  
+
   updateCourse(id: string, course: Partial<Course>): Promise<void> {
     return this.db.collection('courses').doc(id).update(course);
   }
@@ -176,7 +176,7 @@ export class CoursesService {
       })
     );
   }
-  
+
   getEnrolledStudentsInCourse(courseId: string): Observable<User[]> {
     return this.db.collection('courses').doc<Course>(courseId).valueChanges().pipe(
       tap(course => console.log('Course data:', course)),
@@ -193,7 +193,7 @@ export class CoursesService {
             })
           )
         );
-        
+
         return forkJoin(studentObservables).pipe(
           map(users => users.filter((user): user is User => user !== null && user !== undefined)),
           tap(filteredUsers => console.log('Filtered users:', filteredUsers))
@@ -201,7 +201,7 @@ export class CoursesService {
       })
     );
   }
-  
+
 
   addCourse(courseData: any): Observable<any> {
     return this.authService.getCurrentUserObservable().pipe(
@@ -210,7 +210,7 @@ export class CoursesService {
         if (user) {
           const course = {
             ...courseData,
-            isActive : true,
+            isActive: true,
             instructorId: user.uid
           };
           return this.db.collection('courses').add(course);
@@ -222,11 +222,12 @@ export class CoursesService {
     );
   }
 
-  addAssignment(courseId: string, assignmentData: any): Promise<void> {
+  addAssignment(id: string, courseId: string, assignmentData: any): Promise<void> {
     return new Promise((resolve, reject) => {
       const assignmentsRef = this.db.collection('courses').doc(courseId).collection('assignments');
       assignmentsRef.add({
         ...assignmentData,
+        instructorId: id,
         createdOn: new Date()
       })
         .then(docRef => {
@@ -241,9 +242,9 @@ export class CoursesService {
   }
 
   getMyCourses(instructorId: string): Observable<Course[]> {
-    return this.db.collection<Course>('courses', ref => 
+    return this.db.collection<Course>('courses', ref =>
       ref.where('instructorId', '==', instructorId)
-         .where('isActive', '==', true))
+        .where('isActive', '==', true))
       .valueChanges({ idField: 'id' });
   }
 

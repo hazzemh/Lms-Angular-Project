@@ -12,9 +12,12 @@ export class SubmissionsService {
 
   constructor(private firestore: AngularFirestore) {}
 
-  getSubmissions(): Observable<Submission[]> {
-    return this.firestore.collection<Submission>('submissions').valueChanges({ idField: 'id' });
+  getSubmissions(instructorId: string): Observable<Submission[]> {
+    return this.firestore.collection<Submission>('submissions', ref => 
+      ref.where('instructorId', '==', instructorId)
+    ).valueChanges({ idField: 'id' });
   }
+
   
   getStudentName(studentId: string): Observable<User> {
     return this.firestore.collection<User>('users').doc(studentId).valueChanges().pipe(
