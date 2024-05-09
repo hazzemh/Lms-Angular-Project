@@ -1,7 +1,8 @@
 export interface Assignment {
-    id: string;
-    title: string;
-    description: string;
-    dueDate: string;
-    totalMarks: number;
-  }
+  instructorId?: string;
+  id: string;
+  title: string;
+  description: string;
+  dueDate: string;
+  totalMarks: number;
+}
