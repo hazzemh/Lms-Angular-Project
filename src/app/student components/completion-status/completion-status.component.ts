@@ -13,21 +13,28 @@ export class CompletionStatusComponent implements OnInit {
   courses: CourseProgress[] = [
     {
       id: 'course1',
-      title: 'Introduction to Angular',
+      title: 'React JS',
       progress: 85,
       completed: true,
       grade: 'A'
     },
     {
       id: 'course2',
-      title: 'Advanced JavaScript',
+      title: 'Flutter',
       progress: 70,
       completed: false,
       grade: 'B'
     },
     {
       id: 'course3',
-      title: 'Web Development Fundamentals',
+      title: 'COA',
+      progress: 95,
+      completed: true,
+      grade: 'A+'
+    },
+    {
+      id: 'course3',
+      title: 'Marketing',
       progress: 95,
       completed: true,
       grade: 'A+'

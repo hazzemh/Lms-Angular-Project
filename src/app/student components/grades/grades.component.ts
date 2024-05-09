@@ -9,14 +9,6 @@ import { Grade } from '../../models/grade.model';
 export class GradesComponent {
   grades: Grade[] = [
     {
-      courseTitle: 'UI/UX',
-      practical: 20,
-      yearWork: 10,
-      midterm: 15,
-      quizzes: 5,
-      finalExam: 50
-    },
-    {
       courseTitle: 'Flutter',
       practical: 18,
       yearWork: 8,
@@ -47,6 +39,14 @@ export class GradesComponent {
       midterm: 10,
       quizzes: 3,
       finalExam: 40
-    }
+    },
+    {
+      courseTitle: 'UI/UX',
+      practical: 20,
+      yearWork: 10,
+      midterm: 15,
+      quizzes: 5,
+      finalExam: 50
+    },
   ];
 }

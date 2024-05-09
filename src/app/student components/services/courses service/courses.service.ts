@@ -202,7 +202,6 @@ export class CoursesService {
     );
   }
 
-
   addCourse(courseData: any): Observable<any> {
     return this.authService.getCurrentUserObservable().pipe(
       first(),
